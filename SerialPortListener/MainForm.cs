@@ -7,7 +7,7 @@ using SerialPortListener.Serial;
 using System.IO;
 using TestData.TD;
 using System.Threading;
-using TSA_DLL_TEST;
+//using TSA_DLL_TEST;
 using Detector;
 
 
@@ -84,19 +84,19 @@ namespace SerialPortListener
             try
             {
 
-                // Displays an OpenFileDialog so the user can select a Cursor.  
-                OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                openFileDialog1.Filter = "Lookup Table Files|*.bin";
-                openFileDialog1.Title = "Select a Binary Lookup File";
+                //// Displays an OpenFileDialog so the user can select a Cursor.  
+                //OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                //openFileDialog1.Filter = "Lookup Table Files|*.bin";
+                //openFileDialog1.Title = "Select a Binary Lookup File";
 
-                // Show the Dialog.  
-                // If the user clicked OK in the dialog and  
-                // a .BIN file was selected.  
-                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    // Assign the cursor in the Stream to the Form's Cursor property.  
-                    this.Cursor = new Cursor(openFileDialog1.OpenFile());
-                }
+                //// Show the Dialog.  
+                //// If the user clicked OK in the dialog and  
+                //// a .BIN file was selected.  
+                //if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                //{
+                //    // Assign the cursor in the Stream to the Form's Cursor property.  
+                //    this.Cursor = new Cursor(openFileDialog1.OpenFile());
+                //}
 
 
 
@@ -120,12 +120,12 @@ namespace SerialPortListener
             {
 
                 //check for Name and Test Station ID 
-                if ((String.IsNullOrEmpty(txtName.Text)) | (String.IsNullOrEmpty(txtTestStandID.Text)) | (String.IsNullOrEmpty(txtBoardSN.Text)))
-                {
-                    //this where we need to not to do anything until the right fields are filled. 
-                    MessageBox.Show("Name, TestStandID, or BoardSN is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if ((String.IsNullOrEmpty(txtName.Text)) | (String.IsNullOrEmpty(txtTestStandID.Text)) | (String.IsNullOrEmpty(txtBoardSN.Text)))
+                //{
+                //    //this where we need to not to do anything until the right fields are filled. 
+                //    MessageBox.Show("Name, TestStandID, or BoardSN is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
 
                 _testdata.TesterName = txtName.Text;
                 _testdata.TestStandID = txtTestStandID.Text;
@@ -218,7 +218,7 @@ namespace SerialPortListener
 
         private void butSend_Click(object sender, EventArgs e)
         {
-            _spManager.SendString(txtToSend.Text.ToString());
+            //_spManager.SendString(txtToSend.Text.ToString());
         }
 
 
@@ -247,7 +247,7 @@ namespace SerialPortListener
             tbData.Clear();
 
             txtBaudRate.Clear();
-            txtDeviceID.Clear();
+ //           txtDeviceID.Clear();
             txtLookup.Clear();
             txtFW.Clear();
             txtCWD.Clear();
@@ -257,7 +257,7 @@ namespace SerialPortListener
             txtBootApp0.Clear();
 
             txtBaudRate.Enabled = false;
-            txtDeviceID.Enabled = false;
+//            txtDeviceID.Enabled = false;
             txtLookup.Enabled = true;
             txtFW.Enabled = true;
             txtCWD.Enabled = true;
@@ -271,7 +271,7 @@ namespace SerialPortListener
 
             //groupBox2.ForeColor = SystemColors.ControlText;
             txtBaudRate.ForeColor = SystemColors.WindowText;
-            txtDeviceID.ForeColor = SystemColors.WindowText;
+//            txtDeviceID.ForeColor = SystemColors.WindowText;
             txtLookup.ForeColor = SystemColors.WindowText;
             txtFW.ForeColor = SystemColors.WindowText;
             txtCWD.ForeColor = SystemColors.WindowText;
@@ -283,12 +283,12 @@ namespace SerialPortListener
             txtCWD.Text = Directory.GetCurrentDirectory();
 
 
-            openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
+  //          openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
 
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
            txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
-            txtFW.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\firmware_900.bin").ToString();
+            txtFW.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\firmware.bin").ToString();
             txtPartitions.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\partitions.bin").ToString();
 
             //0x1F0000 " + txtLookup.Text.ToString() +
@@ -297,7 +297,7 @@ namespace SerialPortListener
             //        " 0x10000 " + txtFW.Text.ToString() +
             //        " 0x8000 " + txtPartitions.ToString();
 
-
+            //maybe pick a diectory where the right files should be instead of picking each file individually??
 
 
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
@@ -380,7 +380,7 @@ namespace SerialPortListener
             if (str.Contains("FMT personalAlarm!") & (_testdata._testState == 0))
             {
 //                _spManager.SendString("SELFTEST-SECRETKEY");
-                _testdata._testState = 1;
+                //_testdata._testState = 1;
             }
 
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
@@ -397,7 +397,7 @@ namespace SerialPortListener
 
                 str = new string(arr);
                 _testdata.DeviceID = str.Substring(str.Length - 9);
-                txtDeviceID.Text = _testdata.DeviceID.ToString();
+              //  txtDeviceID.Text = _testdata.DeviceID.ToString();
             }
 
 
@@ -405,29 +405,29 @@ namespace SerialPortListener
 
 
 
-            //detect ButtonPress and decide if button press is done.             [INFO] Button State is 0
-            //if the popup box is open and the string "alarm_mode: OFF...Stay put fool!"
+            ////detect ButtonPress and decide if button press is done.             [INFO] Button State is 0
+            ////if the popup box is open and the string "alarm_mode: OFF...Stay put fool!"
 
-            if (str.Contains("alarm_mode:  OFF... Stay put fool!") & (_testdata._testState == 1))
-            {
-                //this means the user has pressed the buttons and the alarm turned off. 
-                //So if both buttons were detected low to start, BUTTON PRESS TEST IS a PASS. 
-                if ((_testdata._button_state_0_detected == true) & (_testdata.initBtnState == 0))
-                {
-                    _testdata.ButtonPressTest = true;
-                    txtBootApp0.Text = "PASS";
-                    txtBootApp0.ForeColor = System.Drawing.Color.Green;//   
-                }
+            //if (str.Contains("alarm_mode:  OFF... Stay put fool!") & (_testdata._testState == 1))
+            //{
+            //    //this means the user has pressed the buttons and the alarm turned off. 
+            //    //So if both buttons were detected low to start, BUTTON PRESS TEST IS a PASS. 
+            //    if ((_testdata._button_state_0_detected == true) & (_testdata.initBtnState == 0))
+            //    {
+            //        _testdata.ButtonPressTest = true;
+            //        txtBootApp0.Text = "PASS";
+            //        txtBootApp0.ForeColor = System.Drawing.Color.Green;//   
+            //    }
 
-                else
-                {
-                    _testdata.ButtonPressTest = false;
-                    txtBootApp0.Text = "FAIL";
-                    txtBootApp0.ForeColor = System.Drawing.Color.Red;//   
-                }
+            //    else
+            //    {
+            //        _testdata.ButtonPressTest = false;
+            //        txtBootApp0.Text = "FAIL";
+            //        txtBootApp0.ForeColor = System.Drawing.Color.Red;//   
+            //    }
 
 
-                _testdata._testState = 2;
+            //    _testdata._testState = 2;
                 _spManager.StopListening();
 
 
@@ -466,7 +466,7 @@ namespace SerialPortListener
                 // set focus to txtBoardSN
                 this.ActiveControl = txtBoardSN;
 
-            }
+            //}
 
 
         }

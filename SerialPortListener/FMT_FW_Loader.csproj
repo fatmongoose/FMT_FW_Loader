@@ -61,7 +61,6 @@
     <Compile Include="SerialPortManager.cs" />
     <Compile Include="SerialSettings.cs" />
     <Compile Include="TestData.cs" />
-    <Compile Include="TSA.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -76,13 +75,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="bin\Debug\amp_ofst.dat" />
     <None Include="bin\Debug\firmware\bootloader_qio_80m.bin" />
     <None Include="bin\Debug\firmware\boot_app0.bin" />
     <None Include="bin\Debug\firmware\firmware.bin" />
     <None Include="bin\Debug\firmware\lookup.bin" />
     <None Include="bin\Debug\firmware\partitions.bin" />
-    <None Include="bin\Debug\freq_ofst.dat" />
     <None Include="obj\x86\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\x86\Debug\SerialPortListener.csproj.CoreCompileInputs.cache" />
@@ -100,11 +97,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\data.txt" />
     <Content Include="bin\Debug\firmware\esptool.exe" />
-    <Content Include="bin\Debug\SerialPortListener.exe" />
-    <Content Include="bin\Debug\SerialPortListener.pdb" />
-    <Content Include="bin\Debug\TSA.dll" />
     <Content Include="obj\x86\Debug\SerialPortListener.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\SerialPortListener.exe" />
     <Content Include="obj\x86\Debug\SerialPortListener.pdb" />
