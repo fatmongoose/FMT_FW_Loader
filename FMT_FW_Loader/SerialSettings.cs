@@ -5,7 +5,7 @@ using System.Text;
 using System.IO.Ports;
 using System.ComponentModel;
 
-namespace SerialPortListener.Serial
+namespace FMT_FW_Loader.Serial
 {
     /// <summary>
     /// Class containing properties related to a serial port 

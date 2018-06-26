@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.IO;
 
-namespace SerialPortListener.Serial
+namespace FMT_FW_Loader.Serial
 {
     /// <summary>
     /// Manager for serial port data

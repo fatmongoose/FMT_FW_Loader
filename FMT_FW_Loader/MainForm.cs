@@ -3,7 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SerialPortListener.Serial;
+using FMT_FW_Loader.Serial;
 using System.IO;
 using TestData.TD;
 using System.Threading;
@@ -34,7 +34,7 @@ using System.Diagnostics;
 
 
 
-namespace SerialPortListener
+namespace FMT_FW_Loader
 {
     public partial class MainForm : Form
     {
@@ -511,6 +511,16 @@ namespace SerialPortListener
         }
 
         private void btnCWD_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDeviceID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDeviceID_TextChanged(object sender, EventArgs e)
         {
 
         }

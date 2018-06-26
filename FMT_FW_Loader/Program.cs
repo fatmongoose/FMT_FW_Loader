@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace SerialPortListener
+namespace FMT_FW_Loader
 {
     static class Program
     {
