@@ -119,17 +119,17 @@ namespace FMT_FW_Loader
             try
             {
 
-                //check for Name and Test Station ID 
-                //if ((String.IsNullOrEmpty(txtName.Text)) | (String.IsNullOrEmpty(txtTestStandID.Text)) | (String.IsNullOrEmpty(txtBoardSN.Text)))
-                //{
-                //    //this where we need to not to do anything until the right fields are filled. 
-                //    MessageBox.Show("Name, TestStandID, or BoardSN is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
+                //check for Name and Test Station ID
+                if ((String.IsNullOrEmpty(txtDeviceID.Text)) || portNameComboBox.DataSource == null)
+                    {
+                        //this where we need to not to do anything until the right fields are filled. 
+                        MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
                 _testdata.TesterName = txtName.Text;
                 _testdata.TestStandID = txtTestStandID.Text;
-                _testdata.BoardSN = txtBoardSN.Text;
+                _testdata.DeviceID = txtDeviceID.Text;
 
                 string target = "firmware\\esptool.exe";
                 string filename = Path.Combine(txtCWD.Text.ToString(), target);
@@ -253,7 +253,7 @@ namespace FMT_FW_Loader
             txtCWD.Clear();
             txtPartitions.Clear();
             txtBootloader.Clear();
-            txtBoardSN.Clear();
+            txtDeviceID.Clear();
             txtBootApp0.Clear();
 
             txtBaudRate.Enabled = false;
@@ -464,7 +464,7 @@ namespace FMT_FW_Loader
                 //clear any exisitng test data
                 initializeForTest();
                 // set focus to txtBoardSN
-                this.ActiveControl = txtBoardSN;
+                this.ActiveControl = txtDeviceID;
 
             //}
 

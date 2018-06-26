@@ -51,9 +51,9 @@
             this.txtBaudRate = new System.Windows.Forms.TextBox();
             this.txtFW = new System.Windows.Forms.TextBox();
             this.txtCWD = new System.Windows.Forms.TextBox();
-            this.txtBoardSN = new System.Windows.Forms.TextBox();
+            this.txtDeviceID = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblBoardSN = new System.Windows.Forms.Label();
+            this.lblDeviceID = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -67,7 +67,7 @@
             // baudRateLabel
             // 
             baudRateLabel.AutoSize = true;
-            baudRateLabel.Location = new System.Drawing.Point(16, 118);
+            baudRateLabel.Location = new System.Drawing.Point(206, 89);
             baudRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             baudRateLabel.Name = "baudRateLabel";
             baudRateLabel.Size = new System.Drawing.Size(75, 17);
@@ -77,7 +77,7 @@
             // portNameLabel
             // 
             portNameLabel.AutoSize = true;
-            portNameLabel.Location = new System.Drawing.Point(16, 94);
+            portNameLabel.Location = new System.Drawing.Point(206, 65);
             portNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             portNameLabel.Name = "portNameLabel";
             portNameLabel.Size = new System.Drawing.Size(75, 17);
@@ -88,7 +88,7 @@
             // 
             this.portNameComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serialSettingsBindingSource, "PortName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.portNameComboBox.FormattingEnabled = true;
-            this.portNameComboBox.Location = new System.Drawing.Point(96, 93);
+            this.portNameComboBox.Location = new System.Drawing.Point(286, 64);
             this.portNameComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.portNameComboBox.Name = "portNameComboBox";
             this.portNameComboBox.Size = new System.Drawing.Size(114, 24);
@@ -97,30 +97,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnCWD);
-            this.groupBox1.Controls.Add(this.btnFW);
-            this.groupBox1.Controls.Add(this.btnPartitions);
-            this.groupBox1.Controls.Add(this.btnBoot_App0);
-            this.groupBox1.Controls.Add(this.btnBootloader);
-            this.groupBox1.Controls.Add(this.txtLookup);
-            this.groupBox1.Controls.Add(this.txtBootloader);
-            this.groupBox1.Controls.Add(this.btnLookup);
             this.groupBox1.Controls.Add(this.btnRefreshSerialPorts);
-            this.groupBox1.Controls.Add(this.txtBootApp0);
             this.groupBox1.Controls.Add(this.btnLoadFW);
-            this.groupBox1.Controls.Add(this.txtTestStandID);
             this.groupBox1.Controls.Add(this.portNameComboBox);
-            this.groupBox1.Controls.Add(this.txtPartitions);
-            this.groupBox1.Controls.Add(this.lblTestStandID);
             this.groupBox1.Controls.Add(this.txtBaudRate);
-            this.groupBox1.Controls.Add(this.txtFW);
-            this.groupBox1.Controls.Add(this.txtCWD);
             this.groupBox1.Controls.Add(portNameLabel);
-            this.groupBox1.Controls.Add(this.txtBoardSN);
+            this.groupBox1.Controls.Add(this.txtDeviceID);
             this.groupBox1.Controls.Add(baudRateLabel);
-            this.groupBox1.Controls.Add(this.lblName);
-            this.groupBox1.Controls.Add(this.lblBoardSN);
-            this.groupBox1.Controls.Add(this.txtName);
+            this.groupBox1.Controls.Add(this.lblDeviceID);
             this.groupBox1.Location = new System.Drawing.Point(29, 15);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
@@ -133,7 +117,7 @@
             // btnCWD
             // 
             this.btnCWD.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCWD.Location = new System.Drawing.Point(255, 30);
+            this.btnCWD.Location = new System.Drawing.Point(856, 46);
             this.btnCWD.Margin = new System.Windows.Forms.Padding(4);
             this.btnCWD.Name = "btnCWD";
             this.btnCWD.Size = new System.Drawing.Size(100, 28);
@@ -145,7 +129,7 @@
             // btnFW
             // 
             this.btnFW.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnFW.Location = new System.Drawing.Point(255, 68);
+            this.btnFW.Location = new System.Drawing.Point(856, 84);
             this.btnFW.Margin = new System.Windows.Forms.Padding(4);
             this.btnFW.Name = "btnFW";
             this.btnFW.Size = new System.Drawing.Size(100, 28);
@@ -156,7 +140,7 @@
             // btnPartitions
             // 
             this.btnPartitions.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnPartitions.Location = new System.Drawing.Point(255, 105);
+            this.btnPartitions.Location = new System.Drawing.Point(856, 121);
             this.btnPartitions.Margin = new System.Windows.Forms.Padding(4);
             this.btnPartitions.Name = "btnPartitions";
             this.btnPartitions.Size = new System.Drawing.Size(100, 28);
@@ -167,7 +151,7 @@
             // btnBoot_App0
             // 
             this.btnBoot_App0.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnBoot_App0.Location = new System.Drawing.Point(255, 142);
+            this.btnBoot_App0.Location = new System.Drawing.Point(856, 158);
             this.btnBoot_App0.Margin = new System.Windows.Forms.Padding(4);
             this.btnBoot_App0.Name = "btnBoot_App0";
             this.btnBoot_App0.Size = new System.Drawing.Size(100, 28);
@@ -178,7 +162,7 @@
             // btnBootloader
             // 
             this.btnBootloader.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnBootloader.Location = new System.Drawing.Point(255, 179);
+            this.btnBootloader.Location = new System.Drawing.Point(856, 195);
             this.btnBootloader.Margin = new System.Windows.Forms.Padding(4);
             this.btnBootloader.Name = "btnBootloader";
             this.btnBootloader.Size = new System.Drawing.Size(100, 28);
@@ -189,7 +173,7 @@
             // txtLookup
             // 
             this.txtLookup.Enabled = false;
-            this.txtLookup.Location = new System.Drawing.Point(361, 221);
+            this.txtLookup.Location = new System.Drawing.Point(962, 237);
             this.txtLookup.Margin = new System.Windows.Forms.Padding(2);
             this.txtLookup.Name = "txtLookup";
             this.txtLookup.Size = new System.Drawing.Size(276, 22);
@@ -198,7 +182,7 @@
             // txtBootloader
             // 
             this.txtBootloader.Enabled = false;
-            this.txtBootloader.Location = new System.Drawing.Point(361, 183);
+            this.txtBootloader.Location = new System.Drawing.Point(962, 199);
             this.txtBootloader.Margin = new System.Windows.Forms.Padding(2);
             this.txtBootloader.Name = "txtBootloader";
             this.txtBootloader.Size = new System.Drawing.Size(276, 22);
@@ -207,7 +191,7 @@
             // btnLookup
             // 
             this.btnLookup.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnLookup.Location = new System.Drawing.Point(255, 216);
+            this.btnLookup.Location = new System.Drawing.Point(856, 232);
             this.btnLookup.Margin = new System.Windows.Forms.Padding(4);
             this.btnLookup.Name = "btnLookup";
             this.btnLookup.Size = new System.Drawing.Size(100, 28);
@@ -218,7 +202,7 @@
             // 
             // btnRefreshSerialPorts
             // 
-            this.btnRefreshSerialPorts.Location = new System.Drawing.Point(14, 151);
+            this.btnRefreshSerialPorts.Location = new System.Drawing.Point(204, 122);
             this.btnRefreshSerialPorts.Margin = new System.Windows.Forms.Padding(2);
             this.btnRefreshSerialPorts.Name = "btnRefreshSerialPorts";
             this.btnRefreshSerialPorts.Size = new System.Drawing.Size(193, 40);
@@ -230,7 +214,7 @@
             // txtBootApp0
             // 
             this.txtBootApp0.Enabled = false;
-            this.txtBootApp0.Location = new System.Drawing.Point(361, 145);
+            this.txtBootApp0.Location = new System.Drawing.Point(962, 161);
             this.txtBootApp0.Margin = new System.Windows.Forms.Padding(2);
             this.txtBootApp0.Name = "txtBootApp0";
             this.txtBootApp0.Size = new System.Drawing.Size(276, 22);
@@ -238,7 +222,7 @@
             // 
             // btnLoadFW
             // 
-            this.btnLoadFW.Location = new System.Drawing.Point(106, 202);
+            this.btnLoadFW.Location = new System.Drawing.Point(253, 166);
             this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2);
             this.btnLoadFW.Name = "btnLoadFW";
             this.btnLoadFW.Size = new System.Drawing.Size(102, 39);
@@ -249,7 +233,7 @@
             // 
             // txtTestStandID
             // 
-            this.txtTestStandID.Location = new System.Drawing.Point(96, 43);
+            this.txtTestStandID.Location = new System.Drawing.Point(687, 237);
             this.txtTestStandID.Margin = new System.Windows.Forms.Padding(2);
             this.txtTestStandID.Name = "txtTestStandID";
             this.txtTestStandID.Size = new System.Drawing.Size(114, 22);
@@ -258,7 +242,7 @@
             // txtPartitions
             // 
             this.txtPartitions.Enabled = false;
-            this.txtPartitions.Location = new System.Drawing.Point(361, 107);
+            this.txtPartitions.Location = new System.Drawing.Point(962, 123);
             this.txtPartitions.Margin = new System.Windows.Forms.Padding(2);
             this.txtPartitions.Name = "txtPartitions";
             this.txtPartitions.Size = new System.Drawing.Size(276, 22);
@@ -267,7 +251,7 @@
             // lblTestStandID
             // 
             this.lblTestStandID.AutoSize = true;
-            this.lblTestStandID.Location = new System.Drawing.Point(-2, 46);
+            this.lblTestStandID.Location = new System.Drawing.Point(589, 240);
             this.lblTestStandID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTestStandID.Name = "lblTestStandID";
             this.lblTestStandID.Size = new System.Drawing.Size(94, 17);
@@ -276,7 +260,7 @@
             // 
             // txtBaudRate
             // 
-            this.txtBaudRate.Location = new System.Drawing.Point(96, 118);
+            this.txtBaudRate.Location = new System.Drawing.Point(286, 89);
             this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2);
             this.txtBaudRate.Name = "txtBaudRate";
             this.txtBaudRate.Size = new System.Drawing.Size(114, 22);
@@ -285,7 +269,7 @@
             // txtFW
             // 
             this.txtFW.Enabled = false;
-            this.txtFW.Location = new System.Drawing.Point(361, 69);
+            this.txtFW.Location = new System.Drawing.Point(962, 85);
             this.txtFW.Margin = new System.Windows.Forms.Padding(2);
             this.txtFW.Name = "txtFW";
             this.txtFW.Size = new System.Drawing.Size(276, 22);
@@ -294,45 +278,45 @@
             // txtCWD
             // 
             this.txtCWD.Enabled = false;
-            this.txtCWD.Location = new System.Drawing.Point(361, 30);
+            this.txtCWD.Location = new System.Drawing.Point(962, 46);
             this.txtCWD.Margin = new System.Windows.Forms.Padding(2);
             this.txtCWD.Name = "txtCWD";
             this.txtCWD.Size = new System.Drawing.Size(276, 22);
             this.txtCWD.TabIndex = 14;
             // 
-            // txtBoardSN
+            // txtDeviceID
             // 
-            this.txtBoardSN.Location = new System.Drawing.Point(96, 68);
-            this.txtBoardSN.Margin = new System.Windows.Forms.Padding(2);
-            this.txtBoardSN.Name = "txtBoardSN";
-            this.txtBoardSN.Size = new System.Drawing.Size(114, 22);
-            this.txtBoardSN.TabIndex = 3;
-            this.txtBoardSN.TextChanged += new System.EventHandler(this.txtDeviceID_TextChanged);
+            this.txtDeviceID.Location = new System.Drawing.Point(286, 39);
+            this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDeviceID.Name = "txtDeviceID";
+            this.txtDeviceID.Size = new System.Drawing.Size(114, 22);
+            this.txtDeviceID.TabIndex = 3;
+            this.txtDeviceID.TextChanged += new System.EventHandler(this.txtDeviceID_TextChanged);
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(46, 23);
+            this.lblName.Location = new System.Drawing.Point(637, 217);
             this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(45, 17);
             this.lblName.TabIndex = 2;
             this.lblName.Text = "Name";
             // 
-            // lblBoardSN
+            // lblDeviceID
             // 
-            this.lblBoardSN.AutoSize = true;
-            this.lblBoardSN.Location = new System.Drawing.Point(18, 70);
-            this.lblBoardSN.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblBoardSN.Name = "lblBoardSN";
-            this.lblBoardSN.Size = new System.Drawing.Size(73, 17);
-            this.lblBoardSN.TabIndex = 3;
-            this.lblBoardSN.Text = "Board S/N";
-            this.lblBoardSN.Click += new System.EventHandler(this.lblDeviceID_Click);
+            this.lblDeviceID.AutoSize = true;
+            this.lblDeviceID.Location = new System.Drawing.Point(208, 41);
+            this.lblDeviceID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblDeviceID.Name = "lblDeviceID";
+            this.lblDeviceID.Size = new System.Drawing.Size(68, 17);
+            this.lblDeviceID.TabIndex = 3;
+            this.lblDeviceID.Text = "Device ID\r\n";
+            this.lblDeviceID.Click += new System.EventHandler(this.lblDeviceID_Click);
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(96, 19);
+            this.txtName.Location = new System.Drawing.Point(687, 213);
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(114, 22);
@@ -340,7 +324,6 @@
             // 
             // tbData
             // 
-            this.tbData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbData.Location = new System.Drawing.Point(2, 17);
             this.tbData.Margin = new System.Windows.Forms.Padding(4);
             this.tbData.Multiline = true;
@@ -351,15 +334,32 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnCWD);
+            this.groupBox4.Controls.Add(this.btnFW);
+            this.groupBox4.Controls.Add(this.txtTestStandID);
             this.groupBox4.Controls.Add(this.tbData);
+            this.groupBox4.Controls.Add(this.btnPartitions);
+            this.groupBox4.Controls.Add(this.lblTestStandID);
+            this.groupBox4.Controls.Add(this.txtCWD);
+            this.groupBox4.Controls.Add(this.btnBoot_App0);
+            this.groupBox4.Controls.Add(this.txtFW);
+            this.groupBox4.Controls.Add(this.btnBootloader);
+            this.groupBox4.Controls.Add(this.txtPartitions);
+            this.groupBox4.Controls.Add(this.lblName);
+            this.groupBox4.Controls.Add(this.txtLookup);
+            this.groupBox4.Controls.Add(this.txtBootApp0);
+            this.groupBox4.Controls.Add(this.txtName);
+            this.groupBox4.Controls.Add(this.txtBootloader);
+            this.groupBox4.Controls.Add(this.btnLookup);
             this.groupBox4.Location = new System.Drawing.Point(29, 290);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(650, 210);
+            this.groupBox4.Size = new System.Drawing.Size(1286, 343);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
+            this.groupBox4.Visible = false;
             // 
             // MainForm
             // 
@@ -370,7 +370,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CancelButton = this.btnLookup;
-            this.ClientSize = new System.Drawing.Size(962, 545);
+            this.ClientSize = new System.Drawing.Size(1299, 621);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -396,9 +396,9 @@
         private System.Windows.Forms.TextBox tbData;
         private System.Windows.Forms.Button btnLookup;
         private System.Windows.Forms.Button btnLoadFW;
-        private System.Windows.Forms.TextBox txtBoardSN;
+        private System.Windows.Forms.TextBox txtDeviceID;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblBoardSN;
+        private System.Windows.Forms.Label lblDeviceID;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtBaudRate;

@@ -31,11 +31,8 @@ namespace FMT_FW_Loader.Serial
             get { return _portName; }
             set
             {
-                if (!_portName.Equals(value))
-                {
-                    _portName = value;
-                    SendPropertyChangedEvent("PortName");
-                }
+                _portName = value;
+                SendPropertyChangedEvent("PortName");
             }
         }
         /// <summary>
