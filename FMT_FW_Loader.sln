@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMT_FW_Loader", "SerialPortListener\FMT_FW_Loader.csproj", "{D6883E9E-C532-4FDF-AFEE-61C47F8A4A1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMT_FW_Loader", "FMT_FW_Loader\FMT_FW_Loader.csproj", "{D6883E9E-C532-4FDF-AFEE-61C47F8A4A1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
