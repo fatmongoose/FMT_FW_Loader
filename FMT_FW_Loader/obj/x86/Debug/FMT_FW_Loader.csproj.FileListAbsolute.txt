@@ -15,3 +15,13 @@ C:\FW Loader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.cspr
 C:\FW Loader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CoreCompileInputs.cache
 C:\FW Loader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
 C:\FW Loader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb
+C:\FW Loader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csprojAssemblyReference.cache
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.exe
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.pdb
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csprojAssemblyReference.cache
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.MainForm.resources
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.Properties.Resources.resources
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.GenerateResource.cache
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CoreCompileInputs.cache
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
+C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb

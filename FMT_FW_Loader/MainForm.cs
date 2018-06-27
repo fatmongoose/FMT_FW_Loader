@@ -120,12 +120,13 @@ namespace FMT_FW_Loader
             {
 
                 //check for Name and Test Station ID
-                if ((String.IsNullOrEmpty(txtDeviceID.Text)) || portNameComboBox.DataSource == null)
-                    {
-                        //this where we need to not to do anything until the right fields are filled. 
-                        MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                if ((String.IsNullOrEmpty(txtDeviceID.Text)) || _spManager.CurrentSerialSettings.PortNameCollection == null)
+                {
+                    //this where we need to not to do anything until the right fields are filled. 
+                    MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                progressBar1.Value = 45;
 
                 _testdata.TesterName = txtName.Text;
                 _testdata.TestStandID = txtTestStandID.Text;
@@ -133,7 +134,6 @@ namespace FMT_FW_Loader
 
                 string target = "firmware\\esptool.exe";
                 string filename = Path.Combine(txtCWD.Text.ToString(), target);
-
 
 
                 //String fw_directory = "C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware";
@@ -154,7 +154,6 @@ namespace FMT_FW_Loader
                 //                String arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() + " --baud " + _spManager.CurrentSerialSettings.BaudRate.ToString() + " --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0x1F0000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\lookup.bin 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin";
 
 
-
                 string arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
                     " --baud " + _testdata._prog_baudRate.ToString() +
                     " --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect" +
@@ -164,6 +163,7 @@ namespace FMT_FW_Loader
                     " 0x10000 " + txtFW.Text.ToString() +
                     " 0x8000 " + txtPartitions.Text.ToString();
                 //            C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin
+
                 Process proc = new Process();
                 proc.StartInfo.FileName = filename;
                 proc.StartInfo.Arguments = arguments;
@@ -175,8 +175,10 @@ namespace FMT_FW_Loader
                 proc.EnableRaisingEvents = true;
                 // Set event handler
                 proc.OutputDataReceived += new DataReceivedEventHandler(procOutputHandler);
+                proc.Exited += Proc_Exited;
 
                 proc.Start();
+                progressBar1.PerformStep();
                 proc.BeginOutputReadLine();
                 proc.BeginErrorReadLine();
 
@@ -185,32 +187,60 @@ namespace FMT_FW_Loader
                     Application.DoEvents(); // This keeps your form responsive by processing events
                 }
 
-
             }
             finally
             {
                 //proc.Close();
             }
 
-
+            _spManager.CurrentSerialSettings.BaudRate = _testdata._baudRate;
+            txtBaudRate.Text = _testdata._baudRate.ToString();
 
             _spManager.StartListening();
-
-
-
-
-
+            
         }
 
-        void procOutputHandler(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        private void Proc_Exited(object sender, EventArgs e)
+        {
+            if ((progressBar1.Value < 900) && (progressBar1.Value > 90))
+            {
+                MessageBox.Show("The firmware upload process has been interrupted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        void procOutputHandler(object sender, DataReceivedEventArgs e)
         {
             Trace.WriteLine(e.Data);
             this.BeginInvoke(new MethodInvoker(() =>
             {
+                string temp = e.Data;
 
-                tbData.AppendText((e.Data + "\r\n") ?? string.Empty);
-                tbData.ScrollToCaret();
+                if (!(string.IsNullOrEmpty(temp)))
+                {
+                    tbData.AppendText(temp + "\r\n");
+                    tbData.ScrollToCaret();
 
+                    if (
+                    temp.Contains("(10 %)") || temp.Contains("(16 %)") || 
+                    temp.Contains("(20 %)") || temp.Contains("(25 %)") ||
+                    temp.Contains("(30 %)") || temp.Contains("(36 %)") ||
+                    temp.Contains("(40 %)") || temp.Contains("(45 %)") ||
+                    temp.Contains("(50 %)") || temp.Contains("(56 %)") ||
+                    temp.Contains("(60 %)") || temp.Contains("(65 %)") ||
+                    temp.Contains("(70 %)") || temp.Contains("(76 %)") ||
+                    temp.Contains("(80 %)") || temp.Contains("(85 %)") ||
+                    temp.Contains("(90 %)") || temp.Contains("(96 %)")
+                        )
+                    {
+                        progressBar1.PerformStep();
+                    }
+
+                    if (temp.Contains("Hard resetting via RTS pin"))
+                    {
+                        progressBar1.Value = 1000;
+                    }
+                } 
+                
             }
             )
             );
@@ -313,7 +343,7 @@ namespace FMT_FW_Loader
             // Serialize JSON test data.
 
             MemoryStream stream1 = new MemoryStream();
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(TestData.TD.TestDataRec));
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(TestDataRec));
 
 
             ser.WriteObject(stream1, _testdata);
@@ -348,7 +378,7 @@ namespace FMT_FW_Loader
 
         private void portNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //SerialPortService.PortsChanged += (sender1, changedArgs) => DoSomethingSerial(changedArgs.SerialPorts);
+
         }
 
 
@@ -379,7 +409,7 @@ namespace FMT_FW_Loader
             //then send the "SELFTEST-SECRETKEY"
             if (str.Contains("FMT personalAlarm!") & (_testdata._testState == 0))
             {
-//                _spManager.SendString("SELFTEST-SECRETKEY");
+                //_spManager.SendString("SELFTEST-SECRETKEY");
                 //_testdata._testState = 1;
             }
 
@@ -399,8 +429,6 @@ namespace FMT_FW_Loader
                 _testdata.DeviceID = str.Substring(str.Length - 9);
               //  txtDeviceID.Text = _testdata.DeviceID.ToString();
             }
-
-
 
 
 
@@ -428,30 +456,30 @@ namespace FMT_FW_Loader
 
 
             //    _testdata._testState = 2;
-                _spManager.StopListening();
+            _spManager.StopListening();
 
 
 
                 //clear the text box that tells them to press the buttons. 
 
                 //poll the user to see if the leds and audio worked? 
-                DialogResult response = MessageBox.Show("Did you see the GREEN, RED and BLUE LED's and did the speaker work during the test?",
-                    "Observation Question",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question,
-                    MessageBoxDefaultButton.Button1);
-                if (response == DialogResult.Yes)
-                {
-                    _testdata.LedAudioTest = true;
-                    txtBootloader.Text = "PASS";
-                    txtBootloader.ForeColor = System.Drawing.Color.Green;//   
-                }
-                else
-                {
-                    _testdata.LedAudioTest = false;
-                    txtBootloader.Text = "FAIL";
-                    txtBootloader.ForeColor = System.Drawing.Color.Red;//   
-                }
+                //DialogResult response = MessageBox.Show("Did you see the GREEN, RED and BLUE LED's and did the speaker work during the test?",
+                //    "Observation Question",
+                //    MessageBoxButtons.YesNo,
+                //    MessageBoxIcon.Question,
+                //    MessageBoxDefaultButton.Button1);
+                //if (response == DialogResult.Yes)
+                //{
+                //    _testdata.LedAudioTest = true;
+                //    txtBootloader.Text = "PASS";
+                //    txtBootloader.ForeColor = System.Drawing.Color.Green;//   
+                //}
+                //else
+                //{
+                //    _testdata.LedAudioTest = false;
+                //    txtBootloader.Text = "FAIL";
+                //    txtBootloader.ForeColor = System.Drawing.Color.Red;//   
+                //}
 
 
 
@@ -521,6 +549,16 @@ namespace FMT_FW_Loader
         }
 
         private void txtDeviceID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
         {
 
         }

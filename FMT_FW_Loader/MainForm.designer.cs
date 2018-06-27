@@ -34,6 +34,12 @@
             this.portNameComboBox = new System.Windows.Forms.ComboBox();
             this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.btnRefreshSerialPorts = new System.Windows.Forms.Button();
+            this.btnLoadFW = new System.Windows.Forms.Button();
+            this.txtBaudRate = new System.Windows.Forms.TextBox();
+            this.txtDeviceID = new System.Windows.Forms.TextBox();
+            this.lblDeviceID = new System.Windows.Forms.Label();
             this.btnCWD = new System.Windows.Forms.Button();
             this.btnFW = new System.Windows.Forms.Button();
             this.btnPartitions = new System.Windows.Forms.Button();
@@ -42,18 +48,13 @@
             this.txtLookup = new System.Windows.Forms.TextBox();
             this.txtBootloader = new System.Windows.Forms.TextBox();
             this.btnLookup = new System.Windows.Forms.Button();
-            this.btnRefreshSerialPorts = new System.Windows.Forms.Button();
             this.txtBootApp0 = new System.Windows.Forms.TextBox();
-            this.btnLoadFW = new System.Windows.Forms.Button();
             this.txtTestStandID = new System.Windows.Forms.TextBox();
             this.txtPartitions = new System.Windows.Forms.TextBox();
             this.lblTestStandID = new System.Windows.Forms.Label();
-            this.txtBaudRate = new System.Windows.Forms.TextBox();
             this.txtFW = new System.Windows.Forms.TextBox();
             this.txtCWD = new System.Windows.Forms.TextBox();
-            this.txtDeviceID = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblDeviceID = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -97,6 +98,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Controls.Add(this.btnRefreshSerialPorts);
             this.groupBox1.Controls.Add(this.btnLoadFW);
             this.groupBox1.Controls.Add(this.portNameComboBox);
@@ -113,6 +115,67 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Inputs";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(204, 210);
+            this.progressBar1.Maximum = 1000;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(193, 23);
+            this.progressBar1.Step = 45;
+            this.progressBar1.TabIndex = 23;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
+            // 
+            // btnRefreshSerialPorts
+            // 
+            this.btnRefreshSerialPorts.Location = new System.Drawing.Point(204, 122);
+            this.btnRefreshSerialPorts.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRefreshSerialPorts.Name = "btnRefreshSerialPorts";
+            this.btnRefreshSerialPorts.Size = new System.Drawing.Size(193, 40);
+            this.btnRefreshSerialPorts.TabIndex = 23;
+            this.btnRefreshSerialPorts.Text = "Refresh Serial Ports";
+            this.btnRefreshSerialPorts.UseVisualStyleBackColor = true;
+            this.btnRefreshSerialPorts.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnLoadFW
+            // 
+            this.btnLoadFW.Location = new System.Drawing.Point(253, 166);
+            this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLoadFW.Name = "btnLoadFW";
+            this.btnLoadFW.Size = new System.Drawing.Size(102, 39);
+            this.btnLoadFW.TabIndex = 5;
+            this.btnLoadFW.Text = "Load FW";
+            this.btnLoadFW.UseVisualStyleBackColor = true;
+            this.btnLoadFW.Click += new System.EventHandler(this.buttonLoadFW_Click);
+            // 
+            // txtBaudRate
+            // 
+            this.txtBaudRate.Location = new System.Drawing.Point(286, 89);
+            this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBaudRate.Name = "txtBaudRate";
+            this.txtBaudRate.Size = new System.Drawing.Size(114, 22);
+            this.txtBaudRate.TabIndex = 11;
+            // 
+            // txtDeviceID
+            // 
+            this.txtDeviceID.Location = new System.Drawing.Point(286, 39);
+            this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDeviceID.Name = "txtDeviceID";
+            this.txtDeviceID.Size = new System.Drawing.Size(114, 22);
+            this.txtDeviceID.TabIndex = 3;
+            this.txtDeviceID.TextChanged += new System.EventHandler(this.txtDeviceID_TextChanged);
+            // 
+            // lblDeviceID
+            // 
+            this.lblDeviceID.AutoSize = true;
+            this.lblDeviceID.Location = new System.Drawing.Point(208, 41);
+            this.lblDeviceID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblDeviceID.Name = "lblDeviceID";
+            this.lblDeviceID.Size = new System.Drawing.Size(68, 17);
+            this.lblDeviceID.TabIndex = 3;
+            this.lblDeviceID.Text = "Device ID\r\n";
+            this.lblDeviceID.Click += new System.EventHandler(this.lblDeviceID_Click);
             // 
             // btnCWD
             // 
@@ -200,17 +263,6 @@
             this.btnLookup.UseVisualStyleBackColor = true;
             this.btnLookup.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // btnRefreshSerialPorts
-            // 
-            this.btnRefreshSerialPorts.Location = new System.Drawing.Point(204, 122);
-            this.btnRefreshSerialPorts.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRefreshSerialPorts.Name = "btnRefreshSerialPorts";
-            this.btnRefreshSerialPorts.Size = new System.Drawing.Size(193, 40);
-            this.btnRefreshSerialPorts.TabIndex = 23;
-            this.btnRefreshSerialPorts.Text = "Refresh Serial Ports";
-            this.btnRefreshSerialPorts.UseVisualStyleBackColor = true;
-            this.btnRefreshSerialPorts.Click += new System.EventHandler(this.button1_Click);
-            // 
             // txtBootApp0
             // 
             this.txtBootApp0.Enabled = false;
@@ -219,17 +271,6 @@
             this.txtBootApp0.Name = "txtBootApp0";
             this.txtBootApp0.Size = new System.Drawing.Size(276, 22);
             this.txtBootApp0.TabIndex = 20;
-            // 
-            // btnLoadFW
-            // 
-            this.btnLoadFW.Location = new System.Drawing.Point(253, 166);
-            this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLoadFW.Name = "btnLoadFW";
-            this.btnLoadFW.Size = new System.Drawing.Size(102, 39);
-            this.btnLoadFW.TabIndex = 5;
-            this.btnLoadFW.Text = "Load FW";
-            this.btnLoadFW.UseVisualStyleBackColor = true;
-            this.btnLoadFW.Click += new System.EventHandler(this.buttonLoadFW_Click);
             // 
             // txtTestStandID
             // 
@@ -258,14 +299,6 @@
             this.lblTestStandID.TabIndex = 6;
             this.lblTestStandID.Text = "Test Stand ID";
             // 
-            // txtBaudRate
-            // 
-            this.txtBaudRate.Location = new System.Drawing.Point(286, 89);
-            this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2);
-            this.txtBaudRate.Name = "txtBaudRate";
-            this.txtBaudRate.Size = new System.Drawing.Size(114, 22);
-            this.txtBaudRate.TabIndex = 11;
-            // 
             // txtFW
             // 
             this.txtFW.Enabled = false;
@@ -284,15 +317,6 @@
             this.txtCWD.Size = new System.Drawing.Size(276, 22);
             this.txtCWD.TabIndex = 14;
             // 
-            // txtDeviceID
-            // 
-            this.txtDeviceID.Location = new System.Drawing.Point(286, 39);
-            this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDeviceID.Name = "txtDeviceID";
-            this.txtDeviceID.Size = new System.Drawing.Size(114, 22);
-            this.txtDeviceID.TabIndex = 3;
-            this.txtDeviceID.TextChanged += new System.EventHandler(this.txtDeviceID_TextChanged);
-            // 
             // lblName
             // 
             this.lblName.AutoSize = true;
@@ -302,17 +326,6 @@
             this.lblName.Size = new System.Drawing.Size(45, 17);
             this.lblName.TabIndex = 2;
             this.lblName.Text = "Name";
-            // 
-            // lblDeviceID
-            // 
-            this.lblDeviceID.AutoSize = true;
-            this.lblDeviceID.Location = new System.Drawing.Point(208, 41);
-            this.lblDeviceID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblDeviceID.Name = "lblDeviceID";
-            this.lblDeviceID.Size = new System.Drawing.Size(68, 17);
-            this.lblDeviceID.TabIndex = 3;
-            this.lblDeviceID.Text = "Device ID\r\n";
-            this.lblDeviceID.Click += new System.EventHandler(this.lblDeviceID_Click);
             // 
             // txtName
             // 
@@ -392,7 +405,6 @@
 
         private System.Windows.Forms.BindingSource serialSettingsBindingSource;
         private System.Windows.Forms.ComboBox portNameComboBox;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbData;
         private System.Windows.Forms.Button btnLookup;
         private System.Windows.Forms.Button btnLoadFW;
@@ -416,6 +428,8 @@
         private System.Windows.Forms.Button btnBoot_App0;
         private System.Windows.Forms.Button btnBootloader;
         private System.Windows.Forms.Button btnCWD;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
