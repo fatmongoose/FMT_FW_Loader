@@ -120,7 +120,7 @@ namespace FMT_FW_Loader
             {
 
                 //check for Name and Test Station ID
-                if ((String.IsNullOrEmpty(txtDeviceID.Text)) || _spManager.CurrentSerialSettings.PortNameCollection == null)
+                if (_spManager.CurrentSerialSettings.PortNameCollection == null)
                 {
                     //this where we need to not to do anything until the right fields are filled. 
                     MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
