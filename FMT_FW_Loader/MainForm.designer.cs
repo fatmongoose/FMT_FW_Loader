@@ -107,14 +107,14 @@
             this.groupBox1.Controls.Add(this.txtDeviceID);
             this.groupBox1.Controls.Add(baudRateLabel);
             this.groupBox1.Controls.Add(this.lblDeviceID);
-            this.groupBox1.Location = new System.Drawing.Point(29, 15);
+            this.groupBox1.Location = new System.Drawing.Point(31, 15);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(654, 268);
+            this.groupBox1.Size = new System.Drawing.Size(453, 268);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Inputs";
+            this.groupBox1.Text = "V1.0";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // progressBar1

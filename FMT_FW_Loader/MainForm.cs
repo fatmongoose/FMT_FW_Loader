@@ -178,7 +178,7 @@ namespace FMT_FW_Loader
                 proc.Exited += Proc_Exited;
 
                 proc.Start();
-                progressBar1.PerformStep();
+                progressBar1.Value = 90;
                 proc.BeginOutputReadLine();
                 proc.BeginErrorReadLine();
 
@@ -221,18 +221,156 @@ namespace FMT_FW_Loader
                     tbData.ScrollToCaret();
 
                     if (
-                    temp.Contains("(10 %)") || temp.Contains("(16 %)") || 
-                    temp.Contains("(20 %)") || temp.Contains("(25 %)") ||
-                    temp.Contains("(30 %)") || temp.Contains("(36 %)") ||
-                    temp.Contains("(40 %)") || temp.Contains("(45 %)") ||
-                    temp.Contains("(50 %)") || temp.Contains("(56 %)") ||
-                    temp.Contains("(60 %)") || temp.Contains("(65 %)") ||
-                    temp.Contains("(70 %)") || temp.Contains("(76 %)") ||
-                    temp.Contains("(80 %)") || temp.Contains("(85 %)") ||
-                    temp.Contains("(90 %)") || temp.Contains("(96 %)")
+                    temp.Contains("(1 %)") || temp.Contains("(2 %)") || 
+                    temp.Contains("(3 %)") || temp.Contains("(4 %)") ||
+                    temp.Contains("(5 %)")
                         )
                     {
-                        progressBar1.PerformStep();
+                        progressBar1.Value = 135;
+                    }
+                    if (
+                    temp.Contains("(6 %)") || temp.Contains("(7 %)") ||
+                    temp.Contains("(8 %)") || temp.Contains("(9 %)") ||
+                    temp.Contains("(10 %)")
+                        )
+                    {
+                        progressBar1.Value = 180;
+                    }
+                    if (
+                    temp.Contains("(11 %)") || temp.Contains("(12 %)") ||
+                    temp.Contains("(13 %)") || temp.Contains("(14 %)") ||
+                    temp.Contains("(15 %)")
+                        )
+                    {
+                        progressBar1.Value = 225;
+                    }
+                    if (
+                    temp.Contains("(16 %)") || temp.Contains("(17 %)") ||
+                    temp.Contains("(18 %)") || temp.Contains("(19 %)") ||
+                    temp.Contains("(20 %)")
+                        )
+                    {
+                        progressBar1.Value = 270;
+                    }
+                    if (
+                    temp.Contains("(21 %)") || temp.Contains("(22 %)") ||
+                    temp.Contains("(23 %)") || temp.Contains("(24 %)") ||
+                    temp.Contains("(25 %)")
+                        )
+                    {
+                        progressBar1.Value = 315;
+                    }
+                    if (
+                    temp.Contains("(26 %)") || temp.Contains("(27 %)") ||
+                    temp.Contains("(28 %)") || temp.Contains("(29 %)") ||
+                    temp.Contains("(30 %)")
+                        )
+                    {
+                        progressBar1.Value = 360;
+                    }
+                    if (
+                    temp.Contains("(31 %)") || temp.Contains("(32 %)") ||
+                    temp.Contains("(33 %)") || temp.Contains("(34 %)") ||
+                    temp.Contains("(35 %)")
+                        )
+                    {
+                        progressBar1.Value = 405;
+                    }
+                    if (
+                    temp.Contains("(36 %)") || temp.Contains("(37 %)") ||
+                    temp.Contains("(38 %)") || temp.Contains("(39 %)") ||
+                    temp.Contains("(40 %)")
+                        )
+                    {
+                        progressBar1.Value = 450;
+                    }
+                    if (
+                    temp.Contains("(41 %)") || temp.Contains("(42 %)") ||
+                    temp.Contains("(43 %)") || temp.Contains("(44 %)") ||
+                    temp.Contains("(45 %)")
+                        )
+                    {
+                        progressBar1.Value = 495;
+                    }
+                    if (
+                    temp.Contains("(46 %)") || temp.Contains("(47 %)") ||
+                    temp.Contains("(48 %)") || temp.Contains("(49 %)") ||
+                    temp.Contains("(50 %)")
+                        )
+                    {
+                        progressBar1.Value = 540;
+                    }
+                    if (
+                    temp.Contains("(51 %)") || temp.Contains("(52 %)") ||
+                    temp.Contains("(53 %)") || temp.Contains("(54 %)") ||
+                    temp.Contains("(55 %)")
+                        )
+                    {
+                        progressBar1.Value = 585;
+                    }
+                    if (
+                    temp.Contains("(56 %)") || temp.Contains("(57 %)") ||
+                    temp.Contains("(58 %)") || temp.Contains("(59 %)") ||
+                    temp.Contains("(60 %)")
+                        )
+                    {
+                        progressBar1.Value = 630;
+                    }
+                    if (
+                    temp.Contains("(61 %)") || temp.Contains("(62 %)") ||
+                    temp.Contains("(63 %)") || temp.Contains("(64 %)") ||
+                    temp.Contains("(65 %)")
+                        )
+                    {
+                        progressBar1.Value = 675;
+                    }
+                    if (
+                    temp.Contains("(66 %)") || temp.Contains("(67 %)") ||
+                    temp.Contains("(68 %)") || temp.Contains("(69 %)") ||
+                    temp.Contains("(70 %)")
+                        )
+                    {
+                        progressBar1.Value = 720;
+                    }
+                    if (
+                    temp.Contains("(71 %)") || temp.Contains("(72 %)") ||
+                    temp.Contains("(73 %)") || temp.Contains("(74 %)") ||
+                    temp.Contains("(75 %)")
+                        )
+                    {
+                        progressBar1.Value = 765;
+                    }
+                    if (
+                    temp.Contains("(76 %)") || temp.Contains("(77 %)") ||
+                    temp.Contains("(78 %)") || temp.Contains("(79 %)") ||
+                    temp.Contains("(80 %)")
+                        )
+                    {
+                        progressBar1.Value = 810;
+                    }
+                    if (
+                    temp.Contains("(81 %)") || temp.Contains("(82 %)") ||
+                    temp.Contains("(83 %)") || temp.Contains("(84 %)") ||
+                    temp.Contains("(85 %)")
+                        )
+                    {
+                        progressBar1.Value = 855;
+                    }
+                    if (
+                    temp.Contains("(86 %)") || temp.Contains("(87 %)") ||
+                    temp.Contains("(88 %)") || temp.Contains("(89 %)") ||
+                    temp.Contains("(90 %)")
+                        )
+                    {
+                        progressBar1.Value = 900;
+                    }
+                    if (
+                    temp.Contains("(91 %)") || temp.Contains("(92 %)") ||
+                    temp.Contains("(93 %)") || temp.Contains("(94 %)") ||
+                    temp.Contains("(95 %)")
+                        )
+                    {
+                        progressBar1.Value = 945;
                     }
 
                     if (temp.Contains("Hard resetting via RTS pin"))
@@ -262,6 +400,7 @@ namespace FMT_FW_Loader
 
         private void button1_Click(object sender, EventArgs e)
         {
+            progressBar1.Value = 0;
             _spManager.refreshPorts();
         }
 
