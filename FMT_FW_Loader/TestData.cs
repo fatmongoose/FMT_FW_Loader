@@ -20,6 +20,7 @@ namespace TestData.TD
         public string TestStandID = "1"; // { get; set; }
         public string BoardSN = "1111111111"; // { get; set; }
 
+        public string content;
         public string _portName = "";
         public string[] _portNameCollection;
         public int _baudRate = 115200;

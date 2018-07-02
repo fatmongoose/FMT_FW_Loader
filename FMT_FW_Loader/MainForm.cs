@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FMT_FW_Loader.Serial;
 using System.IO;
@@ -61,7 +61,13 @@ namespace FMT_FW_Loader
             portNameComboBox.DataSource = mySerialSettings.PortNameCollection;
             txtBaudRate.Text = mySerialSettings.BaudRate.ToString();
 
+
             initializeForTest();
+
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+            StreamReader reader = new StreamReader(stream);
+            _testdata.content = reader.ReadToEnd();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -118,9 +124,10 @@ namespace FMT_FW_Loader
         {
             try
             {
-
+                _spManager.refreshPorts();
+                textBox1.Visible = false;
                 //check for Name and Test Station ID
-                if (_spManager.CurrentSerialSettings.PortNameCollection == null)
+                if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
                 {
                     //this where we need to not to do anything until the right fields are filled. 
                     MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -294,8 +301,7 @@ namespace FMT_FW_Loader
                     }
                     if (
                     temp.Contains("(46 %)") || temp.Contains("(47 %)") ||
-                    temp.Contains("(48 %)") || temp.Contains("(49 %)") ||
-                    temp.Contains("(50 %)")
+                    temp.Contains("(48 %)") || temp.Contains("(49 %)")
                         )
                     {
                         progressBar1.Value = 540;
@@ -334,8 +340,7 @@ namespace FMT_FW_Loader
                     }
                     if (
                     temp.Contains("(71 %)") || temp.Contains("(72 %)") ||
-                    temp.Contains("(73 %)") || temp.Contains("(74 %)") ||
-                    temp.Contains("(75 %)")
+                    temp.Contains("(73 %)") || temp.Contains("(74 %)")
                         )
                     {
                         progressBar1.Value = 765;
@@ -373,10 +378,6 @@ namespace FMT_FW_Loader
                         progressBar1.Value = 945;
                     }
 
-                    if (temp.Contains("Hard resetting via RTS pin"))
-                    {
-                        progressBar1.Value = 1000;
-                    }
                 } 
                 
             }
@@ -414,6 +415,19 @@ namespace FMT_FW_Loader
             // check to see if we need to do this....                 _testdata._testState = 0;
 
             tbData.Clear();
+            idData.Clear();
+
+            // Read each line of the file into a string array. Each element
+            // of the array is one line of the file.
+            string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
+
+            // Display the file contents by using a foreach loop.
+            Console.WriteLine("Contents of WriteLines2.txt = ");
+            foreach (string line in lines)
+            {
+                // Use a tab to indent each line of the file.
+                idData.AppendText(line + "\r\n");
+            }
 
             txtBaudRate.Clear();
  //           txtDeviceID.Clear();
@@ -546,10 +560,25 @@ namespace FMT_FW_Loader
             /************************* START THE TEST **************************************/
             //wait for this string to pop up, "FMT personalAlarm!"
             //then send the "SELFTEST-SECRETKEY"
-            if (str.Contains("FMT personalAlarm!") & (_testdata._testState == 0))
+            if (str.Contains("FMT personalAlarm!") || str.Contains("Going to sleep now"))
             {
-                //_spManager.SendString("SELFTEST-SECRETKEY");
-                //_testdata._testState = 1;
+                Regex rx = new Regex(txtDeviceID.Text.ToString());
+                foreach (Match match in rx.Matches(_testdata.content))
+                {
+                    int i = match.Index;
+                    // idData.AppendText("\r\n" + i.ToString());
+                    idData.AppendText(_testdata.content.Substring(i, 25) + "\r\n");
+                }
+                //_spManager.SendString("VERSION");
+                progressBar1.Value = 1000;
+                textBox1.Visible = true;
+                //postResults();
+                // Call to web, match DeviceID to make sure that it has already been tested at CASE. 
+                // Hang out. 
+                //idData.AppendText(txtDeviceID.Text.ToString() + ";");
+                File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
+                _spManager.StopListening();
+                initializeForTest();
             }
 
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
@@ -595,7 +624,7 @@ namespace FMT_FW_Loader
 
 
             //    _testdata._testState = 2;
-            _spManager.StopListening();
+            //_spManager.StopListening();
 
 
 
@@ -629,7 +658,7 @@ namespace FMT_FW_Loader
 
 
                 //clear any exisitng test data
-                initializeForTest();
+              //  initializeForTest();
                 // set focus to txtBoardSN
                 this.ActiveControl = txtDeviceID;
 
@@ -698,6 +727,40 @@ namespace FMT_FW_Loader
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClearList_Click(object sender, EventArgs e)
+        {
+            File.WriteAllText(cd + "\\firmware\\idData.txt", String.Empty);
+            idData.Clear();
+        }
+
+        private void btnWebRefresh_Click(object sender, EventArgs e)
+        {
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+            StreamReader reader = new StreamReader(stream);
+            _testdata.content = reader.ReadToEnd();
+            // idData.AppendText(_testdata.content);
+            // 002C3D8F;EAE878171F6DCB67
+
+
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
         {
 
         }
