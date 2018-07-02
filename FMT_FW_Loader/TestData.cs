@@ -15,6 +15,9 @@ namespace TestData.TD
         public bool _button_state_0_detected = false;
         public int initBtnState = 1;
         public bool ButtonPressTest = false;
+//        public Directory cd = new Directory;// = ("c:\");
+
+
 
         public string TesterName = "John Doe"; // { get; set; }
         public string TestStandID = "1"; // { get; set; }

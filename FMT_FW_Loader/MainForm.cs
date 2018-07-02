@@ -46,7 +46,7 @@ namespace FMT_FW_Loader
         public MainForm()
         {
             InitializeComponent();
-
+            this.Text = ("FMT FW Loader " + Directory.GetCurrentDirectory().ToString());
             UserInitialization();
         }
 
@@ -64,10 +64,10 @@ namespace FMT_FW_Loader
 
             initializeForTest();
 
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
-            StreamReader reader = new StreamReader(stream);
-            _testdata.content = reader.ReadToEnd();
+            //WebClient client = new WebClient();
+            //Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+            //StreamReader reader = new StreamReader(stream);
+            //_testdata.content = reader.ReadToEnd();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -125,7 +125,7 @@ namespace FMT_FW_Loader
             try
             {
                 _spManager.refreshPorts();
-                textBox1.Visible = false;
+                txtLoadComplete.Visible = false;
                 //check for Name and Test Station ID
                 if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
                 {
@@ -135,8 +135,8 @@ namespace FMT_FW_Loader
                 }
                 progressBar1.Value = 45;
 
-                _testdata.TesterName = txtName.Text;
-                _testdata.TestStandID = txtTestStandID.Text;
+               // _testdata.TesterName = txtName.Text;
+               // _testdata.TestStandID = txtTestStandID.Text;
                 _testdata.DeviceID = txtDeviceID.Text;
 
                 string target = "firmware\\esptool.exe";
@@ -408,21 +408,29 @@ namespace FMT_FW_Loader
 
         private void initializeForTest()
         {
-            cd = Directory.GetCurrentDirectory();
             //clear out any old test data
             _testdata = new TestDataRec();
+            cd = Directory.GetCurrentDirectory();
+
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+            StreamReader reader = new StreamReader(stream);
+            _testdata.content = reader.ReadToEnd();
+
 
             // check to see if we need to do this....                 _testdata._testState = 0;
 
             tbData.Clear();
             idData.Clear();
 
+            progressBar1.Value = 1000;
+            txtLoadComplete.Visible = true;
+
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
             string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
 
             // Display the file contents by using a foreach loop.
-            Console.WriteLine("Contents of WriteLines2.txt = ");
             foreach (string line in lines)
             {
                 // Use a tab to indent each line of the file.
@@ -430,7 +438,7 @@ namespace FMT_FW_Loader
             }
 
             txtBaudRate.Clear();
- //           txtDeviceID.Clear();
+            txtDeviceID.Clear();
             txtLookup.Clear();
             txtFW.Clear();
             txtCWD.Clear();
@@ -439,32 +447,32 @@ namespace FMT_FW_Loader
             txtDeviceID.Clear();
             txtBootApp0.Clear();
 
-            txtBaudRate.Enabled = false;
-//            txtDeviceID.Enabled = false;
-            txtLookup.Enabled = true;
-            txtFW.Enabled = true;
-            txtCWD.Enabled = true;
-            txtPartitions.Enabled = true;
-            txtBootloader.Enabled = true;
-            txtBootApp0.Enabled = true;
+            //            txtBaudRate.Enabled = false;
+            ////            txtDeviceID.Enabled = false;
+            //            txtLookup.Enabled = true;
+            //            txtFW.Enabled = true;
+            //            txtCWD.Enabled = true;
+            //            txtPartitions.Enabled = true;
+            //            txtBootloader.Enabled = true;
+            //            txtBootApp0.Enabled = true;
 
 
 
             //groupBox2.Text = "Results";
 
-            //groupBox2.ForeColor = SystemColors.ControlText;
-            txtBaudRate.ForeColor = SystemColors.WindowText;
-//            txtDeviceID.ForeColor = SystemColors.WindowText;
-            txtLookup.ForeColor = SystemColors.WindowText;
-            txtFW.ForeColor = SystemColors.WindowText;
-            txtCWD.ForeColor = SystemColors.WindowText;
-            txtPartitions.ForeColor = SystemColors.WindowText;
-            txtBootloader.ForeColor = SystemColors.WindowText;
-            txtBootApp0.ForeColor = SystemColors.WindowText;
+            //            //groupBox2.ForeColor = SystemColors.ControlText;
+            //            txtBaudRate.ForeColor = SystemColors.WindowText;
+            ////            txtDeviceID.ForeColor = SystemColors.WindowText;
+            //            txtLookup.ForeColor = SystemColors.WindowText;
+            //            txtFW.ForeColor = SystemColors.WindowText;
+            //            txtCWD.ForeColor = SystemColors.WindowText;
+            //            txtPartitions.ForeColor = SystemColors.WindowText;
+            //            txtBootloader.ForeColor = SystemColors.WindowText;
+            //            txtBootApp0.ForeColor = SystemColors.WindowText;
 
 
             txtCWD.Text = Directory.GetCurrentDirectory();
-
+            
 
   //          openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
 
@@ -485,6 +493,10 @@ namespace FMT_FW_Loader
 
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
+
+            // set focus
+            this.ActiveControl = txtDeviceID;
+
 
 
         }
@@ -553,37 +565,59 @@ namespace FMT_FW_Loader
             // ASCII data is converted to text
             //           string str = Encoding.ASCII.GetString(e.Data);
             //           tbData.AppendText(str);
-            string str = e.Str;
-            tbData.AppendText(str + "\r\n");
+            string str = (e.Str + "\r\n");
+            tbData.AppendText(str);
             tbData.ScrollToCaret();
 
-            /************************* START THE TEST **************************************/
+            /************************* Verify the boot **************************************/
             //wait for this string to pop up, "FMT personalAlarm!"
             //then send the "SELFTEST-SECRETKEY"
-            if (str.Contains("FMT personalAlarm!") || str.Contains("Going to sleep now"))
+            int foundit = 0;
+
+            if (str.Contains("Reading alarm file"))
             {
+                foundit = 1;
+            }
+            if (str.Contains("FMT personalAlarm"))
+            {
+                foundit = 1;
+            }
+            if (str.Contains("Going to sleep"))
+            {
+                foundit = 1;
+            }
+            if (foundit == 1)
+            {
+                string temp = _testdata.content.ToString(); 
                 Regex rx = new Regex(txtDeviceID.Text.ToString());
-                foreach (Match match in rx.Matches(_testdata.content))
+                foreach (Match match in rx.Matches(temp))
                 {
                     int i = match.Index;
                     // idData.AppendText("\r\n" + i.ToString());
-                    idData.AppendText(_testdata.content.Substring(i, 25) + "\r\n");
+                    idData.AppendText(temp.Substring(i, 25) + "\r\n");
                 }
                 //_spManager.SendString("VERSION");
                 progressBar1.Value = 1000;
-                textBox1.Visible = true;
+                txtLoadComplete.Visible = true;
                 //postResults();
                 // Call to web, match DeviceID to make sure that it has already been tested at CASE. 
                 // Hang out. 
                 //idData.AppendText(txtDeviceID.Text.ToString() + ";");
                 File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 _spManager.StopListening();
+                //clear any exisitng test data
                 initializeForTest();
             }
 
+
+
+
+
+
+
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
 
-         
+
 
             //get the deviceID                  Device ID: 002C1E76
 
@@ -657,12 +691,8 @@ namespace FMT_FW_Loader
 
 
 
-                //clear any exisitng test data
-              //  initializeForTest();
-                // set focus to txtBoardSN
-                this.ActiveControl = txtDeviceID;
 
-            //}
+
 
 
         }
@@ -706,45 +736,25 @@ namespace FMT_FW_Loader
             sw.Stop();
         }
 
-        private void btnCWD_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void lblDeviceID_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void txtDeviceID_TextChanged(object sender, EventArgs e)
-        {
 
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void btnClearList_Click(object sender, EventArgs e)
         {
             File.WriteAllText(cd + "\\firmware\\idData.txt", String.Empty);
             idData.Clear();
+            // set focus
+            this.ActiveControl = txtDeviceID;
         }
 
         private void btnWebRefresh_Click(object sender, EventArgs e)
@@ -752,17 +762,34 @@ namespace FMT_FW_Loader
             WebClient client = new WebClient();
             Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
             StreamReader reader = new StreamReader(stream);
-            _testdata.content = reader.ReadToEnd();
+          //  _testdata.content.Equals(null);
+            _testdata.content.Equals(reader.ReadToEnd());
             // idData.AppendText(_testdata.content);
             // 002C3D8F;EAE878171F6DCB67
-
+            initializeForTest();
 
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btn_ShowFile_Click(object sender, EventArgs e)
         {
+            
+            string filePath = cd + "\\firmware\\idData.txt";
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
 
+            // combine the arguments together
+            // it doesn't matter if there is a space after ','
+            string argument = "/select, \"" + filePath + "\"";
+
+            System.Diagnostics.Process.Start("explorer.exe", argument);
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            initializeForTest();
         }
     }
 }
