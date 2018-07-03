@@ -125,6 +125,7 @@ namespace FMT_FW_Loader
             try
             {
                 _spManager.refreshPorts();
+                txtDeviceID.CharacterCasing = CharacterCasing.Upper;
                 txtLoadComplete.Visible = false;
                 //check for Name and Test Station ID
                 if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
@@ -408,23 +409,36 @@ namespace FMT_FW_Loader
 
         private void initializeForTest()
         {
+            if (!File.Exists(cd + "\\firmware\\idData.txt"))
+            {
+                File.Create(cd + "\\firmware\\idData.txt").Close();
+            }
+
             //clear out any old test data
             _testdata = new TestDataRec();
             cd = Directory.GetCurrentDirectory();
 
             WebClient client = new WebClient();
-            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
-            StreamReader reader = new StreamReader(stream);
+            //Stream webdata = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+
+            MemoryStream memoryStream = new MemoryStream();
+            using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+            {
+                input.CopyTo(memoryStream);
+            }
+            memoryStream.Position = 0;
+
+            StreamReader reader = new StreamReader(memoryStream);
             _testdata.content = reader.ReadToEnd();
 
-
+            reader.BaseStream.Position = 0;
             // check to see if we need to do this....                 _testdata._testState = 0;
 
             tbData.Clear();
             idData.Clear();
 
-            progressBar1.Value = 1000;
-            txtLoadComplete.Visible = true;
+            //progressBar1.Value = 1000;
+            //txtLoadComplete.Visible = true;
 
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
@@ -760,14 +774,23 @@ namespace FMT_FW_Loader
         private void btnWebRefresh_Click(object sender, EventArgs e)
         {
             WebClient client = new WebClient();
-            Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
-            StreamReader reader = new StreamReader(stream);
-          //  _testdata.content.Equals(null);
-            _testdata.content.Equals(reader.ReadToEnd());
+            //Stream webdata = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
+
+            MemoryStream memoryStream = new MemoryStream();
+            using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+            {
+                input.CopyTo(memoryStream);
+            }
+            memoryStream.Position = 0;
+
+            StreamReader reader = new StreamReader(memoryStream);
+            _testdata.content = reader.ReadToEnd();
+
+            reader.BaseStream.Position = 0;
             // idData.AppendText(_testdata.content);
             // 002C3D8F;EAE878171F6DCB67
-            initializeForTest();
-
+            //initializeForTest();
+            this.ActiveControl = txtDeviceID;
 
         }
 
