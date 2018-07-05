@@ -48,6 +48,7 @@ namespace FMT_FW_Loader
             InitializeComponent();
             this.Text = ("FMT FW Loader " + Directory.GetCurrentDirectory().ToString());
             UserInitialization();
+            MkSpiffs();
         }
 
 
@@ -80,7 +81,34 @@ namespace FMT_FW_Loader
             _spManager.Dispose();
         }
 
-       
+        private void MkSpiffs()
+        {
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
+            {
+                string mksp = " -c ./image -p 256 -b 4096 -s 1966080 -d 5 lookup.bin";
+
+                Process proc = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    // Hide the command window.
+                    WorkingDirectory = cd + "\\firmware",
+                    // Use the command line.
+                    FileName = cd + "\\firmware\\mkspiffs-0.2.3-arduino-esp32-win32.exe",
+                    Arguments = mksp
+                };
+                proc.StartInfo = startInfo;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = false;
+                proc.StartInfo.UseShellExecute = false;
+
+                proc.StartInfo.CreateNoWindow = true;
+                proc.EnableRaisingEvents = true;
+                proc.Start();
+            } else {
+                //Do nothing.
+            }
+        }
+
         // Handles the "Stop Listening"-buttom click event
         private void btnStop_Click(object sender, EventArgs e)
         {
@@ -813,6 +841,11 @@ namespace FMT_FW_Loader
         private void btnRestart_Click(object sender, EventArgs e)
         {
             initializeForTest();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            MkSpiffs();
         }
     }
 }
