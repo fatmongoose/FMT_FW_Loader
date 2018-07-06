@@ -36,8 +36,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRestart = new System.Windows.Forms.Button();
             this.btn_ShowFile = new System.Windows.Forms.Button();
-            this.btnWebRefresh = new System.Windows.Forms.Button();
-            this.btnClearList = new System.Windows.Forms.Button();
             this.idData = new System.Windows.Forms.TextBox();
             this.txtLoadComplete = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -45,6 +43,8 @@
             this.txtBaudRate = new System.Windows.Forms.TextBox();
             this.txtDeviceID = new System.Windows.Forms.TextBox();
             this.lblDeviceID = new System.Windows.Forms.Label();
+            this.btnWebRefresh = new System.Windows.Forms.Button();
+            this.btnClearList = new System.Windows.Forms.Button();
             this.btnRefreshSerialPorts = new System.Windows.Forms.Button();
             this.btnCWD = new System.Windows.Forms.Button();
             this.btnFW = new System.Windows.Forms.Button();
@@ -64,6 +64,8 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.LineCountBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -94,7 +96,7 @@
             this.portNameComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serialSettingsBindingSource, "PortName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.portNameComboBox.FormattingEnabled = true;
             this.portNameComboBox.Location = new System.Drawing.Point(104, 64);
-            this.portNameComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.portNameComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.portNameComboBox.Name = "portNameComboBox";
             this.portNameComboBox.Size = new System.Drawing.Size(114, 24);
             this.portNameComboBox.TabIndex = 4;
@@ -102,6 +104,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.LineCountBox);
             this.groupBox1.Controls.Add(this.btnRestart);
             this.groupBox1.Controls.Add(this.btn_ShowFile);
             this.groupBox1.Controls.Add(this.idData);
@@ -115,9 +119,9 @@
             this.groupBox1.Controls.Add(this.baudRateLabel);
             this.groupBox1.Controls.Add(this.lblDeviceID);
             this.groupBox1.Location = new System.Drawing.Point(31, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(819, 224);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
@@ -143,32 +147,10 @@
             this.btn_ShowFile.UseVisualStyleBackColor = true;
             this.btn_ShowFile.Click += new System.EventHandler(this.btn_ShowFile_Click);
             // 
-            // btnWebRefresh
-            // 
-            this.btnWebRefresh.Location = new System.Drawing.Point(655, 121);
-            this.btnWebRefresh.Name = "btnWebRefresh";
-            this.btnWebRefresh.Size = new System.Drawing.Size(128, 39);
-            this.btnWebRefresh.TabIndex = 26;
-            this.btnWebRefresh.Text = "Refresh Web ";
-            this.btnWebRefresh.UseVisualStyleBackColor = true;
-            this.btnWebRefresh.Visible = false;
-            this.btnWebRefresh.Click += new System.EventHandler(this.btnWebRefresh_Click);
-            // 
-            // btnClearList
-            // 
-            this.btnClearList.Location = new System.Drawing.Point(654, 169);
-            this.btnClearList.Name = "btnClearList";
-            this.btnClearList.Size = new System.Drawing.Size(102, 39);
-            this.btnClearList.TabIndex = 23;
-            this.btnClearList.Text = "Clear List";
-            this.btnClearList.UseVisualStyleBackColor = true;
-            this.btnClearList.Visible = false;
-            this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
-            // 
             // idData
             // 
             this.idData.Location = new System.Drawing.Point(241, 17);
-            this.idData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idData.Margin = new System.Windows.Forms.Padding(4);
             this.idData.Multiline = true;
             this.idData.Name = "idData";
             this.idData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -197,7 +179,7 @@
             // btnLoadFW
             // 
             this.btnLoadFW.Location = new System.Drawing.Point(71, 122);
-            this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2);
             this.btnLoadFW.Name = "btnLoadFW";
             this.btnLoadFW.Size = new System.Drawing.Size(102, 39);
             this.btnLoadFW.TabIndex = 5;
@@ -208,7 +190,7 @@
             // txtBaudRate
             // 
             this.txtBaudRate.Location = new System.Drawing.Point(104, 89);
-            this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2);
             this.txtBaudRate.Name = "txtBaudRate";
             this.txtBaudRate.Size = new System.Drawing.Size(114, 22);
             this.txtBaudRate.TabIndex = 11;
@@ -216,7 +198,8 @@
             // txtDeviceID
             // 
             this.txtDeviceID.Location = new System.Drawing.Point(104, 39);
-            this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDeviceID.MaxLength = 8;
             this.txtDeviceID.Name = "txtDeviceID";
             this.txtDeviceID.Size = new System.Drawing.Size(114, 22);
             this.txtDeviceID.TabIndex = 3;
@@ -231,10 +214,32 @@
             this.lblDeviceID.TabIndex = 3;
             this.lblDeviceID.Text = "Device ID\r\n";
             // 
+            // btnWebRefresh
+            // 
+            this.btnWebRefresh.Location = new System.Drawing.Point(655, 121);
+            this.btnWebRefresh.Name = "btnWebRefresh";
+            this.btnWebRefresh.Size = new System.Drawing.Size(128, 39);
+            this.btnWebRefresh.TabIndex = 26;
+            this.btnWebRefresh.Text = "Refresh Web ";
+            this.btnWebRefresh.UseVisualStyleBackColor = true;
+            this.btnWebRefresh.Visible = false;
+            this.btnWebRefresh.Click += new System.EventHandler(this.btnWebRefresh_Click);
+            // 
+            // btnClearList
+            // 
+            this.btnClearList.Location = new System.Drawing.Point(654, 169);
+            this.btnClearList.Name = "btnClearList";
+            this.btnClearList.Size = new System.Drawing.Size(102, 39);
+            this.btnClearList.TabIndex = 23;
+            this.btnClearList.Text = "Clear List";
+            this.btnClearList.UseVisualStyleBackColor = true;
+            this.btnClearList.Visible = false;
+            this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
+            // 
             // btnRefreshSerialPorts
             // 
             this.btnRefreshSerialPorts.Location = new System.Drawing.Point(654, 67);
-            this.btnRefreshSerialPorts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRefreshSerialPorts.Margin = new System.Windows.Forms.Padding(2);
             this.btnRefreshSerialPorts.Name = "btnRefreshSerialPorts";
             this.btnRefreshSerialPorts.Size = new System.Drawing.Size(193, 40);
             this.btnRefreshSerialPorts.TabIndex = 23;
@@ -247,7 +252,7 @@
             // 
             this.btnCWD.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCWD.Location = new System.Drawing.Point(856, 46);
-            this.btnCWD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCWD.Margin = new System.Windows.Forms.Padding(4);
             this.btnCWD.Name = "btnCWD";
             this.btnCWD.Size = new System.Drawing.Size(100, 28);
             this.btnCWD.TabIndex = 28;
@@ -258,7 +263,7 @@
             // 
             this.btnFW.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnFW.Location = new System.Drawing.Point(856, 84);
-            this.btnFW.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFW.Margin = new System.Windows.Forms.Padding(4);
             this.btnFW.Name = "btnFW";
             this.btnFW.Size = new System.Drawing.Size(100, 28);
             this.btnFW.TabIndex = 27;
@@ -269,7 +274,7 @@
             // 
             this.btnPartitions.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnPartitions.Location = new System.Drawing.Point(856, 121);
-            this.btnPartitions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPartitions.Margin = new System.Windows.Forms.Padding(4);
             this.btnPartitions.Name = "btnPartitions";
             this.btnPartitions.Size = new System.Drawing.Size(100, 28);
             this.btnPartitions.TabIndex = 26;
@@ -280,7 +285,7 @@
             // 
             this.btnBoot_App0.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBoot_App0.Location = new System.Drawing.Point(856, 158);
-            this.btnBoot_App0.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBoot_App0.Margin = new System.Windows.Forms.Padding(4);
             this.btnBoot_App0.Name = "btnBoot_App0";
             this.btnBoot_App0.Size = new System.Drawing.Size(100, 28);
             this.btnBoot_App0.TabIndex = 25;
@@ -291,7 +296,7 @@
             // 
             this.btnBootloader.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBootloader.Location = new System.Drawing.Point(856, 195);
-            this.btnBootloader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBootloader.Margin = new System.Windows.Forms.Padding(4);
             this.btnBootloader.Name = "btnBootloader";
             this.btnBootloader.Size = new System.Drawing.Size(100, 28);
             this.btnBootloader.TabIndex = 24;
@@ -302,7 +307,7 @@
             // 
             this.txtLookup.Enabled = false;
             this.txtLookup.Location = new System.Drawing.Point(962, 237);
-            this.txtLookup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtLookup.Margin = new System.Windows.Forms.Padding(2);
             this.txtLookup.Name = "txtLookup";
             this.txtLookup.Size = new System.Drawing.Size(276, 22);
             this.txtLookup.TabIndex = 13;
@@ -311,7 +316,7 @@
             // 
             this.txtBootloader.Enabled = false;
             this.txtBootloader.Location = new System.Drawing.Point(962, 199);
-            this.txtBootloader.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBootloader.Margin = new System.Windows.Forms.Padding(2);
             this.txtBootloader.Name = "txtBootloader";
             this.txtBootloader.Size = new System.Drawing.Size(276, 22);
             this.txtBootloader.TabIndex = 17;
@@ -320,7 +325,7 @@
             // 
             this.btnLookup.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnLookup.Location = new System.Drawing.Point(856, 232);
-            this.btnLookup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLookup.Margin = new System.Windows.Forms.Padding(4);
             this.btnLookup.Name = "btnLookup";
             this.btnLookup.Size = new System.Drawing.Size(100, 28);
             this.btnLookup.TabIndex = 12;
@@ -332,7 +337,7 @@
             // 
             this.txtBootApp0.Enabled = false;
             this.txtBootApp0.Location = new System.Drawing.Point(962, 161);
-            this.txtBootApp0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBootApp0.Margin = new System.Windows.Forms.Padding(2);
             this.txtBootApp0.Name = "txtBootApp0";
             this.txtBootApp0.Size = new System.Drawing.Size(276, 22);
             this.txtBootApp0.TabIndex = 20;
@@ -340,7 +345,7 @@
             // txtTestStandID
             // 
             this.txtTestStandID.Location = new System.Drawing.Point(687, 237);
-            this.txtTestStandID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTestStandID.Margin = new System.Windows.Forms.Padding(2);
             this.txtTestStandID.Name = "txtTestStandID";
             this.txtTestStandID.Size = new System.Drawing.Size(114, 22);
             this.txtTestStandID.TabIndex = 2;
@@ -349,7 +354,7 @@
             // 
             this.txtPartitions.Enabled = false;
             this.txtPartitions.Location = new System.Drawing.Point(962, 123);
-            this.txtPartitions.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPartitions.Margin = new System.Windows.Forms.Padding(2);
             this.txtPartitions.Name = "txtPartitions";
             this.txtPartitions.Size = new System.Drawing.Size(276, 22);
             this.txtPartitions.TabIndex = 16;
@@ -368,7 +373,7 @@
             // 
             this.txtFW.Enabled = false;
             this.txtFW.Location = new System.Drawing.Point(962, 85);
-            this.txtFW.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtFW.Margin = new System.Windows.Forms.Padding(2);
             this.txtFW.Name = "txtFW";
             this.txtFW.Size = new System.Drawing.Size(276, 22);
             this.txtFW.TabIndex = 12;
@@ -377,7 +382,7 @@
             // 
             this.txtCWD.Enabled = false;
             this.txtCWD.Location = new System.Drawing.Point(962, 46);
-            this.txtCWD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCWD.Margin = new System.Windows.Forms.Padding(2);
             this.txtCWD.Name = "txtCWD";
             this.txtCWD.Size = new System.Drawing.Size(276, 22);
             this.txtCWD.TabIndex = 14;
@@ -395,7 +400,7 @@
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(687, 213);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(114, 22);
             this.txtName.TabIndex = 1;
@@ -403,7 +408,7 @@
             // tbData
             // 
             this.tbData.Location = new System.Drawing.Point(2, 17);
-            this.tbData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbData.Margin = new System.Windows.Forms.Padding(4);
             this.tbData.Multiline = true;
             this.tbData.Name = "tbData";
             this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -433,14 +438,32 @@
             this.groupBox4.Controls.Add(this.txtBootloader);
             this.groupBox4.Controls.Add(this.btnLookup);
             this.groupBox4.Location = new System.Drawing.Point(26, 245);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(1286, 343);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
             this.groupBox4.Visible = false;
+            // 
+            // LineCountBox
+            // 
+            this.LineCountBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LineCountBox.Location = new System.Drawing.Point(567, 180);
+            this.LineCountBox.Name = "LineCountBox";
+            this.LineCountBox.ReadOnly = true;
+            this.LineCountBox.Size = new System.Drawing.Size(28, 15);
+            this.LineCountBox.TabIndex = 29;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(440, 180);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(122, 17);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Number Scanned:";
             // 
             // MainForm
             // 
@@ -454,7 +477,7 @@
             this.ClientSize = new System.Drawing.Size(962, 545);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(2, 3, 8, 3);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -507,6 +530,8 @@
         private System.Windows.Forms.Button btnWebRefresh;
         private System.Windows.Forms.Button btn_ShowFile;
         private System.Windows.Forms.Button btnRestart;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox LineCountBox;
     }
 }
 

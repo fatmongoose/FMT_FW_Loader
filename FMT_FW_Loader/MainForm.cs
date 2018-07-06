@@ -419,7 +419,6 @@ namespace FMT_FW_Loader
             cd = Directory.GetCurrentDirectory();
 
             WebClient client = new WebClient();
-            //Stream webdata = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
 
             MemoryStream memoryStream = new MemoryStream();
             using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
@@ -450,6 +449,9 @@ namespace FMT_FW_Loader
                 // Use a tab to indent each line of the file.
                 idData.AppendText(line + "\r\n");
             }
+
+            int lineCount = File.ReadAllLines(cd + "\\firmware\\idData.txt").Count();
+            LineCountBox.Text = lineCount.ToString();
 
             txtBaudRate.Clear();
             txtDeviceID.Clear();
