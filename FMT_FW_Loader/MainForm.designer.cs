@@ -34,6 +34,8 @@
             this.portNameComboBox = new System.Windows.Forms.ComboBox();
             this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.LineCountBox = new System.Windows.Forms.TextBox();
             this.btnRestart = new System.Windows.Forms.Button();
             this.btn_ShowFile = new System.Windows.Forms.Button();
             this.idData = new System.Windows.Forms.TextBox();
@@ -64,8 +66,6 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.LineCountBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -126,6 +126,24 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "V1.1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(440, 180);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(122, 17);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Number Scanned:";
+            // 
+            // LineCountBox
+            // 
+            this.LineCountBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LineCountBox.Location = new System.Drawing.Point(567, 180);
+            this.LineCountBox.Name = "LineCountBox";
+            this.LineCountBox.ReadOnly = true;
+            this.LineCountBox.Size = new System.Drawing.Size(28, 15);
+            this.LineCountBox.TabIndex = 29;
             // 
             // btnRestart
             // 
@@ -446,24 +464,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
             this.groupBox4.Visible = false;
-            // 
-            // LineCountBox
-            // 
-            this.LineCountBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LineCountBox.Location = new System.Drawing.Point(567, 180);
-            this.LineCountBox.Name = "LineCountBox";
-            this.LineCountBox.ReadOnly = true;
-            this.LineCountBox.Size = new System.Drawing.Size(28, 15);
-            this.LineCountBox.TabIndex = 29;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(440, 180);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(122, 17);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Number Scanned:";
             // 
             // MainForm
             // 

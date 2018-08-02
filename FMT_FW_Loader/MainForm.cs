@@ -6,30 +6,8 @@ using System.Windows.Forms;
 using FMT_FW_Loader.Serial;
 using System.IO;
 using TestData.TD;
-using System.Threading;
-//using TSA_DLL_TEST;
-using Detector;
-
-
-
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
-//using System.Linq;
-//using System.Text;
-//using System.Windows.Forms;
-//using SerialPortListener.Serial;
-//using System.IO;
-//using System.IO.Ports;
-//using TestData.TD;
-//using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-//using System.Text;
 using System.Net;
-using System.Drawing;
-//using System.Collections.Specialized;
-using System.Numerics;
 using System.Diagnostics;
 
 
@@ -64,10 +42,7 @@ namespace FMT_FW_Loader
 
             initializeForTest();
 
-            //WebClient client = new WebClient();
-            //Stream stream = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
-            //StreamReader reader = new StreamReader(stream);
-            //_testdata.content = reader.ReadToEnd();
+            
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -89,30 +64,7 @@ namespace FMT_FW_Loader
 
             try
             {
-
-                //// Displays an OpenFileDialog so the user can select a Cursor.  
-                //OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                //openFileDialog1.Filter = "Lookup Table Files|*.bin";
-                //openFileDialog1.Title = "Select a Binary Lookup File";
-
-                //// Show the Dialog.  
-                //// If the user clicked OK in the dialog and  
-                //// a .BIN file was selected.  
-                //if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                //{
-                //    // Assign the cursor in the Stream to the Form's Cursor property.  
-                //    this.Cursor = new Cursor(openFileDialog1.OpenFile());
-                //}
-
-
-
-                //if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                //{
-                //    System.IO.StreamReader sr = new
-                //       System.IO.StreamReader(openFileDialog1.FileName);
-                //    MessageBox.Show(sr.ReadToEnd());
-                //    sr.Close();
-                //}
+                
             }
             finally
             {
@@ -142,25 +94,7 @@ namespace FMT_FW_Loader
 
                 string target = "firmware\\esptool.exe";
                 string filename = Path.Combine(txtCWD.Text.ToString(), target);
-
-
-                //String fw_directory = "C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware";
-                //String filename = "C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool.exe";
-                // Get the current directory.
-                //                string DIR_PATH = Application.StartupPath;//String commandline_old = "C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin";
-                //String commandline_6_4_10 = "C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool --chip esp32 --port COM4 --baud 921600 
-                //--before default_reset --after hard_reset write_flash -z --flash_mode dio 
-                //--flash_freq 80m 
-                //--flash_size detect 
-
-                //0x1F000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\lookup.bin 
-                //0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 
-                //0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 
-                //0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 
-                //0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin";
-                //C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool --chip esp32 --port COM4 --baud 921600 --chip esp32 --port COM18 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0x1F0000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\lookup.bin 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin
-                //                String arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() + " --baud " + _spManager.CurrentSerialSettings.BaudRate.ToString() + " --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0x1F0000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\lookup.bin 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin";
-
+                
 
                 string arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
                     " --baud " + _testdata._prog_baudRate.ToString() +
@@ -170,8 +104,7 @@ namespace FMT_FW_Loader
                     " 0x1000 " + txtBootloader.Text.ToString() +
                     " 0x10000 " + txtFW.Text.ToString() +
                     " 0x8000 " + txtPartitions.Text.ToString();
-                //            C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\esptool --chip esp32 --port COM4 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect 0xe000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\boot_app0.bin 0x1000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\bootloader_qio_80m.bin 0x10000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_firmware.bin 0x8000 C:\\Users\\bf\\Documents\\PlatformIO\\Projects\\personalAlarm3_4_FunctionalTest\\firmware\\PersonalAlarm3_3_partitions.bin
-
+                
                 Process proc = new Process();
                 proc.StartInfo.FileName = filename;
                 proc.StartInfo.Arguments = arguments;
@@ -435,10 +368,7 @@ namespace FMT_FW_Loader
 
             tbData.Clear();
             idData.Clear();
-
-            //progressBar1.Value = 1000;
-            //txtLoadComplete.Visible = true;
-
+            
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
             string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
@@ -462,59 +392,21 @@ namespace FMT_FW_Loader
             txtBootloader.Clear();
             txtDeviceID.Clear();
             txtBootApp0.Clear();
-
-            //            txtBaudRate.Enabled = false;
-            ////            txtDeviceID.Enabled = false;
-            //            txtLookup.Enabled = true;
-            //            txtFW.Enabled = true;
-            //            txtCWD.Enabled = true;
-            //            txtPartitions.Enabled = true;
-            //            txtBootloader.Enabled = true;
-            //            txtBootApp0.Enabled = true;
-
-
-
-            //groupBox2.Text = "Results";
-
-            //            //groupBox2.ForeColor = SystemColors.ControlText;
-            //            txtBaudRate.ForeColor = SystemColors.WindowText;
-            ////            txtDeviceID.ForeColor = SystemColors.WindowText;
-            //            txtLookup.ForeColor = SystemColors.WindowText;
-            //            txtFW.ForeColor = SystemColors.WindowText;
-            //            txtCWD.ForeColor = SystemColors.WindowText;
-            //            txtPartitions.ForeColor = SystemColors.WindowText;
-            //            txtBootloader.ForeColor = SystemColors.WindowText;
-            //            txtBootApp0.ForeColor = SystemColors.WindowText;
-
-
+            
             txtCWD.Text = Directory.GetCurrentDirectory();
             
-
-  //          openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
-
+            
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
-           txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
+            txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
             txtFW.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\firmware.bin").ToString();
             txtPartitions.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\partitions.bin").ToString();
-
-            //0x1F0000 " + txtLookup.Text.ToString() +
-            //        " 0xe000 " + txtBootApp0.Text.ToString() +
-            //        " 0x1000 " + txtBootloader.Text.ToString() +
-            //        " 0x10000 " + txtFW.Text.ToString() +
-            //        " 0x8000 " + txtPartitions.ToString();
-
-            //maybe pick a diectory where the right files should be instead of picking each file individually??
-
-
+            
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
             // set focus
             this.ActiveControl = txtDeviceID;
-
-
-
         }
 
 
@@ -534,8 +426,6 @@ namespace FMT_FW_Loader
 
             // POST the serialized JSON test data. 
             var request = (HttpWebRequest)WebRequest.Create("https://sf.fatmongoose.com/sf/personalarmtest");
-            //var request = (HttpWebRequest)WebRequest.Create("https://webhook.site/a64dca6f-7df8-475f-8485-700e4da61ee6");
-            //StreamReader sr = new StreamReader(data);
             string postData = sr.ReadToEnd();
 
             request.Method = "POST";
@@ -578,16 +468,14 @@ namespace FMT_FW_Loader
             {
                 tbData.Text = tbData.Text.Remove(0, tbData.TextLength - maxTextLength);
             }
-            // ASCII data is converted to text
-            //           string str = Encoding.ASCII.GetString(e.Data);
-            //           tbData.AppendText(str);
+            
             string str = (e.Str + "\r\n");
             tbData.AppendText(str);
             tbData.ScrollToCaret();
 
             /************************* Verify the boot **************************************/
-            //wait for this string to pop up, "FMT personalAlarm!"
-            //then send the "SELFTEST-SECRETKEY"
+            // If one of these phrases comes through the serial port, then the boot is verified.
+
             int foundit = 0;
 
             if (str.Contains("Reading alarm file"))
@@ -612,29 +500,18 @@ namespace FMT_FW_Loader
                     // idData.AppendText("\r\n" + i.ToString());
                     idData.AppendText(temp.Substring(i, 25) + "\r\n");
                 }
-                //_spManager.SendString("VERSION");
+                
                 progressBar1.Value = 1000;
                 txtLoadComplete.Visible = true;
-                //postResults();
-                // Call to web, match DeviceID to make sure that it has already been tested at CASE. 
-                // Hang out. 
-                //idData.AppendText(txtDeviceID.Text.ToString() + ";");
+                
                 File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 _spManager.StopListening();
                 //clear any exisitng test data
                 initializeForTest();
             }
-
-
-
-
-
-
-
+            
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
-
-
-
+            
             //get the deviceID                  Device ID: 002C1E76
 
             if (str.Contains("Device ID:") & (_testdata._testState == 1))
@@ -647,100 +524,9 @@ namespace FMT_FW_Loader
                 _testdata.DeviceID = str.Substring(str.Length - 9);
               //  txtDeviceID.Text = _testdata.DeviceID.ToString();
             }
-
-
-
-
-            ////detect ButtonPress and decide if button press is done.             [INFO] Button State is 0
-            ////if the popup box is open and the string "alarm_mode: OFF...Stay put fool!"
-
-            //if (str.Contains("alarm_mode:  OFF... Stay put fool!") & (_testdata._testState == 1))
-            //{
-            //    //this means the user has pressed the buttons and the alarm turned off. 
-            //    //So if both buttons were detected low to start, BUTTON PRESS TEST IS a PASS. 
-            //    if ((_testdata._button_state_0_detected == true) & (_testdata.initBtnState == 0))
-            //    {
-            //        _testdata.ButtonPressTest = true;
-            //        txtBootApp0.Text = "PASS";
-            //        txtBootApp0.ForeColor = System.Drawing.Color.Green;//   
-            //    }
-
-            //    else
-            //    {
-            //        _testdata.ButtonPressTest = false;
-            //        txtBootApp0.Text = "FAIL";
-            //        txtBootApp0.ForeColor = System.Drawing.Color.Red;//   
-            //    }
-
-
-            //    _testdata._testState = 2;
-            //_spManager.StopListening();
-
-
-
-                //clear the text box that tells them to press the buttons. 
-
-                //poll the user to see if the leds and audio worked? 
-                //DialogResult response = MessageBox.Show("Did you see the GREEN, RED and BLUE LED's and did the speaker work during the test?",
-                //    "Observation Question",
-                //    MessageBoxButtons.YesNo,
-                //    MessageBoxIcon.Question,
-                //    MessageBoxDefaultButton.Button1);
-                //if (response == DialogResult.Yes)
-                //{
-                //    _testdata.LedAudioTest = true;
-                //    txtBootloader.Text = "PASS";
-                //    txtBootloader.ForeColor = System.Drawing.Color.Green;//   
-                //}
-                //else
-                //{
-                //    _testdata.LedAudioTest = false;
-                //    txtBootloader.Text = "FAIL";
-                //    txtBootloader.ForeColor = System.Drawing.Color.Red;//   
-                //}
-
-
-
-
-                //_testdata.Text = tbData.Text;
-                //postResults();
-
-
-
-
-
-
-
+            
         }
-
-        //private static double RtlCmd()
-        //{
-        //    double cfreq = 900; // Center frequency in MHz.
-        //    string rtlCmd = " -f " + cfreq.ToString() + "e6 -s 240e3 -n 1e3 -d 1 " + cd + "\\tempout";
-
-        //    Process proc = new Process();
-        //    ProcessStartInfo startInfo = new ProcessStartInfo
-        //    {
-        //        // Hide the command window.
-        //        WindowStyle = ProcessWindowStyle.Hidden,
-        //        // Use the command line.
-        //        FileName = cd + "\\rtl_sdr.exe",
-        //        Arguments = rtlCmd
-        //    };
-        //    proc.StartInfo = startInfo;
-        //    proc.StartInfo.RedirectStandardOutput = true;
-        //    proc.StartInfo.RedirectStandardError = false;
-        //    proc.StartInfo.UseShellExecute = false;// true;
-        //                                           // Stop the process from opening a new window
-        //    proc.StartInfo.CreateNoWindow = true;
-        //    proc.EnableRaisingEvents = true;
-        //    proc.Start();
-        //    //string output = proc.StandardOutput.ReadToEnd();
-        //    //return output;
-
-        //    return cfreq;
-        //}
-
+        
         private static void Delay(double sec)
         {
             Stopwatch sw = new Stopwatch();
@@ -787,13 +573,9 @@ namespace FMT_FW_Loader
 
             StreamReader reader = new StreamReader(memoryStream);
             _testdata.content = reader.ReadToEnd();
-
             reader.BaseStream.Position = 0;
-            // idData.AppendText(_testdata.content);
-            // 002C3D8F;EAE878171F6DCB67
-            //initializeForTest();
+            
             this.ActiveControl = txtDeviceID;
-
         }
 
         private void btn_ShowFile_Click(object sender, EventArgs e)
