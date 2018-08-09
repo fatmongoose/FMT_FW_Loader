@@ -43,7 +43,6 @@ namespace FMT_FW_Loader
 
 
             initializeForTest();
-
             
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
@@ -388,7 +387,8 @@ namespace FMT_FW_Loader
             txtBootApp0.Clear();
             
             txtCWD.Text = Directory.GetCurrentDirectory();
-            
+
+            nameCollect();
             
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
@@ -398,6 +398,8 @@ namespace FMT_FW_Loader
             
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
+
+            //MessageBox.Show("Please select the correct client or property from the drop-down box before you begin.", "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // set focus
             this.ActiveControl = txtDeviceID;
@@ -444,6 +446,7 @@ namespace FMT_FW_Loader
         string responseFromList;
         string[] nameArray;
         JArray parsedList;
+        string whitelistText;
 
         private void nameCollect()
         {
@@ -464,22 +467,22 @@ namespace FMT_FW_Loader
                 // hard-coded at the moment for proof of concept, can add converter
             }
             HttpWebResponse response = (HttpWebResponse)loginReq.GetResponse();
-            tbData.AppendText("\r\nLogin return:\r\n");
+            //tbData.AppendText("\r\nLogin return:\r\n");
 
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 fullRead = reader.ReadToEnd();
-                tbData.AppendText(fullRead + "\r\n");
+                //tbData.AppendText(fullRead + "\r\n");
             }
 
             /********** Separate the JSessionID. **********/
 
             var data = (JObject)JsonConvert.DeserializeObject(fullRead);
             JSessionID = data["JSESSIONID"].Value<string>();
-            tbData.AppendText("\r\nJSessionID:\r\n");
+            //tbData.AppendText("\r\nJSessionID:\r\n");
 
             propListPage = "http://dora.umajin.com/api/1.0/list-properties.php?JSESSIONID=" + JSessionID;
-            tbData.AppendText(propListPage + "\r\n"); // Seems to work!
+            //tbData.AppendText(propListPage + "\r\n"); // Seems to work!
 
             /********** Find properties list. **********/
 
@@ -489,25 +492,26 @@ namespace FMT_FW_Loader
             StreamReader readListResponse = new StreamReader(datastream);
             responseFromList = readListResponse.ReadToEnd();
 
-            tbData.AppendText("\r\nFull Property List:\r\n");
-            tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
+            //tbData.AppendText("\r\nFull Property List:\r\n");
+            //tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
 
             /********** Load properties' names to the combo box. **********/
 
             //var listdata = (JObject)JsonConvert.DeserializeObject(responseFromList);
             parsedList = JArray.Parse(responseFromList);
             List<string> nameList = new List<string>();
-            nameList.Add("Marriott (Client)");
-            nameList.Add("Hilton (Client)");
-            nameList.Add("Marcus (Client)");
-            tbData.AppendText("\r\nParsed List:");
+            nameList.Add("Marriott (Full Client List)");
+            nameList.Add("Hilton (Full Client List)");
+            nameList.Add("Marcus (Full Client List)");
+            nameList.Add("Sage (Full Client List)");
+            //tbData.AppendText("\r\nParsed List:");
             foreach (var item in parsedList.Children())
             {
                 string name = item["property_name"].Value<string>();
                 nameList.Add(name);
-                tbData.AppendText("\r\n" + name);
+                //tbData.AppendText("\r\n" + name);
             }
-            tbData.AppendText("\r\n");
+            //tbData.AppendText("\r\n");
             nameArray = nameList.ToArray();
             regionNameBox.DataSource = nameArray;
         }
@@ -517,36 +521,51 @@ namespace FMT_FW_Loader
             string url = "";
             foreach (var item in parsedList.Children())
             {
-                if (regionNameBox.SelectedIndex > 2)
+                if (regionNameBox.SelectedIndex > 3)
                 {
                     if (item["property_name"].Value<string>() == (string)regionNameBox.SelectedItem)
                     {
                         url = item["url"].Value<string>();
                     }
-                } else  {
+                }  else if (regionNameBox.SelectedIndex == 3) {
+                    string baseUrl = "https://dora.umajin.com/api/1.0/get-whitelist.php?clientid=";
+                    url = baseUrl + 1 + "&JSESSIONID=" + JSessionID;
+                }  else  {
                     int clientid = (regionNameBox.SelectedIndex + 1);
                     string baseUrl = "https://dora.umajin.com/api/1.0/get-whitelist.php?clientid=";
                     url = baseUrl + clientid + "&JSESSIONID=" + JSessionID;
                 }
             }
-            tbData.AppendText("\r\n" + url + "\r\n");
+            //tbData.AppendText("\r\n" + url + "\r\n");
 
             var whitelistReq = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse whitelistResponse = (HttpWebResponse)whitelistReq.GetResponse();
             Stream whitelistData = whitelistResponse.GetResponseStream();
             StreamReader readWhitelist = new StreamReader(whitelistData);
-            string whitelistText = readWhitelist.ReadToEnd();
-            tbData.AppendText("\r\n\r\n");
+            whitelistText = readWhitelist.ReadToEnd();
+            //tbData.AppendText("\r\n\r\n");
             tbData.AppendText(whitelistText + "\r\n");
         }
+
+        private void makeListFile()
+        {
+            string tablePath = cd + "\\firmware\\image\\table.txt";
+            if (File.Exists(tablePath))
+            {
+                File.Delete(tablePath);
+            }
+            File.Create(tablePath).Close();
+            
+            File.WriteAllText(tablePath, whitelistText);
+        }
+
+
 
         private void portNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
-
-
+        
         void _spManager_NewSerialDataRecieved(object sender, SerialDataEventArgs e)
         {
             if (this.InvokeRequired)
@@ -694,14 +713,18 @@ namespace FMT_FW_Loader
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            //getNames();
             nameCollect();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //getWhitelist();
             whitelistCollect();
+            makeListFile();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            makeListFile();
         }
     }
 }
