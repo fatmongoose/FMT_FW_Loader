@@ -34,6 +34,7 @@
             this.portNameComboBox = new System.Windows.Forms.ComboBox();
             this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.LineCountBox = new System.Windows.Forms.TextBox();
             this.btnRestart = new System.Windows.Forms.Button();
@@ -66,6 +67,8 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.regionNameBox = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -126,6 +129,16 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "V1.1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(857, 80);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(107, 23);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "Load Names";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // label1
             // 
@@ -463,7 +476,25 @@
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
-            this.groupBox4.Visible = false;
+            // 
+            // regionNameBox
+            // 
+            this.regionNameBox.FormattingEnabled = true;
+            this.regionNameBox.Location = new System.Drawing.Point(857, 49);
+            this.regionNameBox.MaxDropDownItems = 100;
+            this.regionNameBox.Name = "regionNameBox";
+            this.regionNameBox.Size = new System.Drawing.Size(367, 24);
+            this.regionNameBox.TabIndex = 32;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(970, 79);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(129, 23);
+            this.button2.TabIndex = 33;
+            this.button2.Text = "Load Whitelist";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // MainForm
             // 
@@ -474,7 +505,10 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CancelButton = this.btnLookup;
-            this.ClientSize = new System.Drawing.Size(962, 545);
+            this.ClientSize = new System.Drawing.Size(1523, 545);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.regionNameBox);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -532,6 +566,9 @@
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox LineCountBox;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox regionNameBox;
+        private System.Windows.Forms.Button button2;
     }
 }
 

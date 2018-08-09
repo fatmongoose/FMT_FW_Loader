@@ -34,3 +34,15 @@ C:\Users\bf\Documents\sigfox\PersonalAlarm3_4_PWC\FMT_FW_Loader\FMT_FW_Loader\ob
 C:\Users\bf\Documents\sigfox\PersonalAlarm3_4_PWC\FMT_FW_Loader\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
 C:\Users\bf\Documents\sigfox\PersonalAlarm3_4_PWC\FMT_FW_Loader\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb
 C:\FWLoader\FMT_FW_Loader-master\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csprojAssemblyReference.cache
+C:\WhitelistFlasher\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.exe
+C:\WhitelistFlasher\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.pdb
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csprojAssemblyReference.cache
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.MainForm.resources
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.Properties.Resources.resources
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.GenerateResource.cache
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CoreCompileInputs.cache
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb
+C:\WhitelistFlasher\FMT_FW_Loader\bin\Debug\Newtonsoft.Json.dll
+C:\WhitelistFlasher\FMT_FW_Loader\bin\Debug\Newtonsoft.Json.xml
+C:\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CopyComplete
