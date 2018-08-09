@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
+        "OwnerKey" = "8:_305A36771F114282A95E619EF830C863"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F4EAB80C7592400E83AE0ED8DC60B8C8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -65,6 +71,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_305A36771F114282A95E619EF830C863"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -282,6 +294,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8E32B12EA63C4E9BAB740E1F5D1D674F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F4EAB80C7592400E83AE0ED8DC60B8C8"
             {
             "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\lookup.bin"
@@ -372,6 +415,17 @@
                     "Property" = "8:_F66035B4C7494DE988655E47D6D1A1DD"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_B71F3EA1EAB7458E998AAB31A4B35507"
+                            {
+                            "Name" = "8:image"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_BEEC8417B2C84BE9884BC430923B520C"
+                                "Folders"
+                                {
+                                }
+                            }
                         }
                     }
                 }
@@ -393,7 +447,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Firmware_Loader"
         "ProductCode" = "8:{B6BE5D2A-929D-484A-A9DD-06DCCEB6FDC8}"
-        "PackageCode" = "8:{C61551C6-92BE-492D-A4AC-15B17D1C3927}"
+        "PackageCode" = "8:{56359B85-4CFF-48CC-B712-C7FD49DE8886}"
         "UpgradeCode" = "8:{694512DE-9135-4AE5-9EBC-A682598847EB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

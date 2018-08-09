@@ -9,7 +9,9 @@ using TestData.TD;
 using System.Runtime.Serialization.Json;
 using System.Net;
 using System.Diagnostics;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 
 namespace FMT_FW_Loader
@@ -42,7 +44,8 @@ namespace FMT_FW_Loader
 
             initializeForTest();
 
-            
+            nameCollect();
+
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -51,7 +54,6 @@ namespace FMT_FW_Loader
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Read_Data_Thread_Abort();
             _spManager.Dispose();
         }
 
@@ -60,15 +62,11 @@ namespace FMT_FW_Loader
         private void btnStop_Click(object sender, EventArgs e)
         {
 
-            //_spManager.StopListening();
-
             try
             {
-                
             }
             finally
             {
-
             }
         }
 
@@ -88,8 +86,6 @@ namespace FMT_FW_Loader
                 }
                 progressBar1.Value = 45;
 
-               // _testdata.TesterName = txtName.Text;
-               // _testdata.TestStandID = txtTestStandID.Text;
                 _testdata.DeviceID = txtDeviceID.Text;
 
                 string target = "firmware\\esptool.exe";
@@ -114,6 +110,7 @@ namespace FMT_FW_Loader
                                                        // Stop the process from opening a new window
                 proc.StartInfo.CreateNoWindow = true;
                 proc.EnableRaisingEvents = true;
+
                 // Set event handler
                 proc.OutputDataReceived += new DataReceivedEventHandler(procOutputHandler);
                 proc.Exited += Proc_Exited;
@@ -131,7 +128,6 @@ namespace FMT_FW_Loader
             }
             finally
             {
-                //proc.Close();
             }
 
             _spManager.CurrentSerialSettings.BaudRate = _testdata._baudRate;
@@ -321,7 +317,6 @@ namespace FMT_FW_Loader
 
         private void butSend_Click(object sender, EventArgs e)
         {
-            //_spManager.SendString(txtToSend.Text.ToString());
         }
 
 
@@ -395,7 +390,6 @@ namespace FMT_FW_Loader
             
             txtCWD.Text = Directory.GetCurrentDirectory();
             
-            
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
             txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
@@ -405,12 +399,12 @@ namespace FMT_FW_Loader
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
+            //MessageBox.Show("Please select the correct client or property from the drop-down box before you begin.", "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             // set focus
             this.ActiveControl = txtDeviceID;
         }
-
-
-
+        
         private void postResults()
         {
             // Serialize JSON test data.
@@ -445,15 +439,161 @@ namespace FMT_FW_Loader
 
         }
 
+        /********** Variables for whitelists **********/
+        string fullRead;
+        string JSessionID;
+        string propListPage;
+        string responseFromList;
+        string[] nameArray;
+        JArray parsedList;
+        string whitelistText;
 
+        private void nameCollect()
+        {
+            /********** Use FMT credentials to log into Umajin. **********/
+
+            var loginReq = (HttpWebRequest)WebRequest.Create("http://dora.umajin.com/login.php");
+            loginReq.Method = "POST";
+            loginReq.ContentType = "application/x-www-form-urlencoded";
+            string user = "fmt";
+            // string pass = WebUtility.UrlEncode("hadsk*&^e2jHZgda32"); // UrlEncode method not working?
+            // hadsk%2A%26%5Ee2jHZgda32 // url-encoded password
+            string pass = "hadsk%2A%26%5Ee2jHZgda32";
+            string token = "26a05b8635ee9f74cc86e59cc658f424";
+
+            using (StreamWriter writer = new StreamWriter(loginReq.GetRequestStream()))
+            {
+                writer.Write("username=" + user + "&password=" + pass + "&project_token=" + token);
+                // hard-coded at the moment for proof of concept, can add converter
+            }
+            HttpWebResponse response = (HttpWebResponse)loginReq.GetResponse();
+            //tbData.AppendText("\r\nLogin return:\r\n");
+
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                fullRead = reader.ReadToEnd();
+                //tbData.AppendText(fullRead + "\r\n");
+            }
+
+            /********** Separate the JSessionID. **********/
+
+            var data = (JObject)JsonConvert.DeserializeObject(fullRead);
+            JSessionID = data["JSESSIONID"].Value<string>();
+            //tbData.AppendText("\r\nJSessionID:\r\n");
+
+            propListPage = "http://dora.umajin.com/api/1.0/list-properties.php?JSESSIONID=" + JSessionID;
+            //tbData.AppendText(propListPage + "\r\n"); // Seems to work!
+
+            /********** Find properties list. **********/
+
+            var listReq = (HttpWebRequest)WebRequest.Create(propListPage);
+            HttpWebResponse listResponse = (HttpWebResponse)listReq.GetResponse();
+            Stream datastream = listResponse.GetResponseStream();
+            StreamReader readListResponse = new StreamReader(datastream);
+            responseFromList = readListResponse.ReadToEnd();
+
+            //tbData.AppendText("\r\nFull Property List:\r\n");
+            //tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
+
+            /********** Load properties' names to the combo box. **********/
+
+            //var listdata = (JObject)JsonConvert.DeserializeObject(responseFromList);
+            parsedList = JArray.Parse(responseFromList);
+            List<string> nameList = new List<string>();
+            nameList.Add("Marriott (Full Client List)");
+            nameList.Add("Hilton (Full Client List)");
+            nameList.Add("Marcus (Full Client List)");
+            nameList.Add("Sage (Full Client List)");
+            //tbData.AppendText("\r\nParsed List:");
+            foreach (var item in parsedList.Children())
+            {
+                string name = item["property_name"].Value<string>();
+                nameList.Add(name);
+                //tbData.AppendText("\r\n" + name);
+            }
+            //tbData.AppendText("\r\n");
+            nameArray = nameList.ToArray();
+            regionNameBox.DataSource = nameArray;
+        }
+
+        private void whitelistCollect()
+        {
+            string url = "";
+            foreach (var item in parsedList.Children())
+            {
+                if (regionNameBox.SelectedIndex > 3)
+                {
+                    if (item["property_name"].Value<string>() == (string)regionNameBox.SelectedItem)
+                    {
+                        url = item["url"].Value<string>();
+                    }
+                }  else if (regionNameBox.SelectedIndex == 3) {
+                    string baseUrl = "https://dora.umajin.com/api/1.0/get-whitelist.php?clientid=";
+                    url = baseUrl + 1 + "&JSESSIONID=" + JSessionID;
+                }  else  {
+                    int clientid = (regionNameBox.SelectedIndex + 1);
+                    string baseUrl = "https://dora.umajin.com/api/1.0/get-whitelist.php?clientid=";
+                    url = baseUrl + clientid + "&JSESSIONID=" + JSessionID;
+                }
+            }
+            //tbData.AppendText("\r\n" + url + "\r\n");
+
+            var whitelistReq = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebResponse whitelistResponse = (HttpWebResponse)whitelistReq.GetResponse();
+            Stream whitelistData = whitelistResponse.GetResponseStream();
+            StreamReader readWhitelist = new StreamReader(whitelistData);
+            whitelistText = readWhitelist.ReadToEnd();
+            //tbData.AppendText("\r\n\r\n");
+            tbData.AppendText(whitelistText + "\r\n");
+        }
+
+        private void makeListFile()
+        {
+            string tablePath = cd + "\\firmware\\image\\table.txt";
+            if (File.Exists(tablePath))
+            {
+                File.Delete(tablePath);
+            }
+            File.Create(tablePath).Close();
+            
+            File.WriteAllText(tablePath, whitelistText);
+        }
+
+        private void MkSpiffs()
+        {
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
+            {
+                string mksp = " -c ./image -p 256 -b 4096 -s 1966080 -d 5 lookup.bin";
+
+                Process proc = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    // Make the working directory the firmware directory so that the right file is overwritten.
+                    WorkingDirectory = cd + "\\firmware",
+                    // Use the mkSpiffs executable.
+                    FileName = cd + "\\firmware\\mkspiffs-0.2.3-arduino-esp32-win32.exe",
+                    Arguments = mksp
+                };
+                proc.StartInfo = startInfo;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = false;
+                proc.StartInfo.UseShellExecute = false;
+
+                proc.StartInfo.CreateNoWindow = true;
+                proc.EnableRaisingEvents = true;
+                proc.Start();
+            }
+            else
+            {
+                //Do not run mkSpiffs, use existing lookup.bin.
+            }
+        }
 
         private void portNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
-
-
+        
         void _spManager_NewSerialDataRecieved(object sender, SerialDataEventArgs e)
         {
             if (this.InvokeRequired)
@@ -597,6 +737,28 @@ namespace FMT_FW_Loader
         private void btnRestart_Click(object sender, EventArgs e)
         {
             initializeForTest();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            nameCollect();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            whitelistCollect();
+            makeListFile();
+            MkSpiffs();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            makeListFile();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MkSpiffs();
         }
     }
 }

@@ -45,6 +45,7 @@
             this.txtBaudRate = new System.Windows.Forms.TextBox();
             this.txtDeviceID = new System.Windows.Forms.TextBox();
             this.lblDeviceID = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnWebRefresh = new System.Windows.Forms.Button();
             this.btnClearList = new System.Windows.Forms.Button();
             this.btnRefreshSerialPorts = new System.Windows.Forms.Button();
@@ -66,6 +67,10 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.regionNameBox = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -231,6 +236,17 @@
             this.lblDeviceID.Size = new System.Drawing.Size(68, 17);
             this.lblDeviceID.TabIndex = 3;
             this.lblDeviceID.Text = "Device ID\r\n";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(857, 80);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(107, 23);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "Load Names";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // btnWebRefresh
             // 
@@ -465,6 +481,46 @@
             this.groupBox4.Text = "Progress Monitor";
             this.groupBox4.Visible = false;
             // 
+            // regionNameBox
+            // 
+            this.regionNameBox.FormattingEnabled = true;
+            this.regionNameBox.Location = new System.Drawing.Point(857, 49);
+            this.regionNameBox.MaxDropDownItems = 50;
+            this.regionNameBox.Name = "regionNameBox";
+            this.regionNameBox.Size = new System.Drawing.Size(367, 24);
+            this.regionNameBox.TabIndex = 32;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(970, 79);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(129, 23);
+            this.button2.TabIndex = 33;
+            this.button2.Text = "Load Whitelist";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(1105, 79);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(119, 23);
+            this.button3.TabIndex = 34;
+            this.button3.Text = "Make Table";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(970, 108);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(129, 23);
+            this.button4.TabIndex = 35;
+            this.button4.Text = "mkSpiffs";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnLoadFW;
@@ -474,7 +530,12 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CancelButton = this.btnLookup;
-            this.ClientSize = new System.Drawing.Size(962, 545);
+            this.ClientSize = new System.Drawing.Size(1523, 545);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.regionNameBox);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -532,6 +593,11 @@
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox LineCountBox;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox regionNameBox;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 
