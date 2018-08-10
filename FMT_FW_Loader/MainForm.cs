@@ -46,6 +46,8 @@ namespace FMT_FW_Loader
 
             nameCollect();
 
+            groupBox2.BringToFront();
+            groupBox1.SendToBack();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -399,8 +401,6 @@ namespace FMT_FW_Loader
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
-            //MessageBox.Show("Please select the correct client or property from the drop-down box before you begin.", "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             // set focus
             this.ActiveControl = txtDeviceID;
         }
@@ -667,23 +667,7 @@ namespace FMT_FW_Loader
             
         }
         
-        private static void Delay(double sec)
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            while (sw.Elapsed.TotalSeconds < sec)
-            {
-                // Delay.
-            }
-            sw.Stop();
-        }
-
-
-
-
-
-
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
 
@@ -702,7 +686,6 @@ namespace FMT_FW_Loader
         private void btnWebRefresh_Click(object sender, EventArgs e)
         {
             WebClient client = new WebClient();
-            //Stream webdata = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
 
             MemoryStream memoryStream = new MemoryStream();
             using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
@@ -731,7 +714,7 @@ namespace FMT_FW_Loader
             // it doesn't matter if there is a space after ','
             string argument = "/select, \"" + filePath + "\"";
 
-            System.Diagnostics.Process.Start("explorer.exe", argument);
+            Process.Start("explorer.exe", argument);
         }
 
         private void btnRestart_Click(object sender, EventArgs e)
@@ -749,6 +732,10 @@ namespace FMT_FW_Loader
             whitelistCollect();
             makeListFile();
             MkSpiffs();
+
+            groupBox2.SendToBack();
+            groupBox1.BringToFront();
+            this.ActiveControl = txtDeviceID;
         }
 
         private void button3_Click(object sender, EventArgs e)

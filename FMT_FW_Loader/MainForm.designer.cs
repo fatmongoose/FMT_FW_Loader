@@ -67,13 +67,17 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbData = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.regionNameBox = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.regionNameBox = new System.Windows.Forms.ComboBox();
+            this.whitelistLoadButton = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // baudRateLabel
@@ -123,11 +127,11 @@
             this.groupBox1.Controls.Add(this.txtDeviceID);
             this.groupBox1.Controls.Add(this.baudRateLabel);
             this.groupBox1.Controls.Add(this.lblDeviceID);
-            this.groupBox1.Location = new System.Drawing.Point(31, 15);
+            this.groupBox1.Location = new System.Drawing.Point(13, 19);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(819, 224);
+            this.groupBox1.Size = new System.Drawing.Size(819, 228);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "V1.1";
@@ -239,9 +243,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(857, 80);
+            this.button1.Location = new System.Drawing.Point(366, 212);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 23);
+            this.button1.Size = new System.Drawing.Size(97, 23);
             this.button1.TabIndex = 31;
             this.button1.Text = "Load Names";
             this.button1.UseVisualStyleBackColor = true;
@@ -452,8 +456,11 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.btnCWD);
+            this.groupBox4.Controls.Add(this.button4);
             this.groupBox4.Controls.Add(this.btnRefreshSerialPorts);
+            this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.btnClearList);
+            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnWebRefresh);
             this.groupBox4.Controls.Add(this.btnFW);
             this.groupBox4.Controls.Add(this.txtTestStandID);
@@ -471,7 +478,7 @@
             this.groupBox4.Controls.Add(this.txtName);
             this.groupBox4.Controls.Add(this.txtBootloader);
             this.groupBox4.Controls.Add(this.btnLookup);
-            this.groupBox4.Location = new System.Drawing.Point(26, 245);
+            this.groupBox4.Location = new System.Drawing.Point(31, 364);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -481,45 +488,76 @@
             this.groupBox4.Text = "Progress Monitor";
             this.groupBox4.Visible = false;
             // 
-            // regionNameBox
+            // button4
             // 
-            this.regionNameBox.FormattingEnabled = true;
-            this.regionNameBox.Location = new System.Drawing.Point(857, 49);
-            this.regionNameBox.MaxDropDownItems = 50;
-            this.regionNameBox.Name = "regionNameBox";
-            this.regionNameBox.Size = new System.Drawing.Size(367, 24);
-            this.regionNameBox.TabIndex = 32;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(970, 79);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(129, 23);
-            this.button2.TabIndex = 33;
-            this.button2.Text = "Load Whitelist";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button4.Location = new System.Drawing.Point(366, 236);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(97, 23);
+            this.button4.TabIndex = 35;
+            this.button4.Text = "mkSpiffs";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1105, 79);
+            this.button3.Location = new System.Drawing.Point(366, 265);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(119, 23);
+            this.button3.Size = new System.Drawing.Size(97, 23);
             this.button3.TabIndex = 34;
             this.button3.Text = "Make Table";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // regionNameBox
             // 
-            this.button4.Location = new System.Drawing.Point(970, 108);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(129, 23);
-            this.button4.TabIndex = 35;
-            this.button4.Text = "mkSpiffs";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.regionNameBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.regionNameBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.regionNameBox.FormattingEnabled = true;
+            this.regionNameBox.Location = new System.Drawing.Point(13, 38);
+            this.regionNameBox.MaxDropDownItems = 50;
+            this.regionNameBox.Name = "regionNameBox";
+            this.regionNameBox.Size = new System.Drawing.Size(407, 24);
+            this.regionNameBox.TabIndex = 32;
+            // 
+            // whitelistLoadButton
+            // 
+            this.whitelistLoadButton.Location = new System.Drawing.Point(432, 38);
+            this.whitelistLoadButton.Name = "whitelistLoadButton";
+            this.whitelistLoadButton.Size = new System.Drawing.Size(129, 24);
+            this.whitelistLoadButton.TabIndex = 33;
+            this.whitelistLoadButton.Text = "Load Whitelist";
+            this.whitelistLoadButton.UseVisualStyleBackColor = true;
+            this.whitelistLoadButton.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.regionNameBox);
+            this.groupBox2.Controls.Add(this.whitelistLoadButton);
+            this.groupBox2.Location = new System.Drawing.Point(136, 68);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(577, 100);
+            this.groupBox2.TabIndex = 36;
+            this.groupBox2.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(13, 19);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(819, 228);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(141, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(301, 17);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "Select your whitelist to begin flashing firmware.";
             // 
             // MainForm
             // 
@@ -530,14 +568,11 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CancelButton = this.btnLookup;
-            this.ClientSize = new System.Drawing.Size(1523, 545);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.regionNameBox);
+            this.ClientSize = new System.Drawing.Size(1523, 1053);
             this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox3);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(2, 3, 8, 3);
@@ -550,6 +585,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -595,9 +632,12 @@
         private System.Windows.Forms.TextBox LineCountBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox regionNameBox;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button whitelistLoadButton;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label2;
     }
 }
 
