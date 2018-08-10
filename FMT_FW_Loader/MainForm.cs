@@ -43,7 +43,14 @@ namespace FMT_FW_Loader
 
 
             initializeForTest();
-            
+
+            nameCollect();
+
+
+            MessageBox.Show(
+                "Before you begin, please select the correct client or property from the drop-down box labeled 'Whitelist'. When the right whitelist is selected, click 'Load Whitelist' and the program will be ready to load the correct firmware.",
+                "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -387,8 +394,6 @@ namespace FMT_FW_Loader
             txtBootApp0.Clear();
             
             txtCWD.Text = Directory.GetCurrentDirectory();
-
-            nameCollect();
             
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
@@ -398,8 +403,6 @@ namespace FMT_FW_Loader
             
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
-
-            //MessageBox.Show("Please select the correct client or property from the drop-down box before you begin.", "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // set focus
             this.ActiveControl = txtDeviceID;
@@ -518,6 +521,7 @@ namespace FMT_FW_Loader
 
         private void whitelistCollect()
         {
+            whitelistConfirmed.Visible = false;
             string url = "";
             foreach (var item in parsedList.Children())
             {
@@ -559,7 +563,35 @@ namespace FMT_FW_Loader
             File.WriteAllText(tablePath, whitelistText);
         }
 
+        private void MkSpiffs()
+        {
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
+            {
+                string mksp = " -c ./image -p 256 -b 4096 -s 1966080 -d 5 lookup.bin";
 
+                Process proc = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    // Make the working directory the firmware directory so that the right file is overwritten.
+                    WorkingDirectory = cd + "\\firmware",
+                    // Use the mkSpiffs executable.
+                    FileName = cd + "\\firmware\\mkspiffs-0.2.3-arduino-esp32-win32.exe",
+                    Arguments = mksp
+                };
+                proc.StartInfo = startInfo;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = false;
+                proc.StartInfo.UseShellExecute = false;
+
+                proc.StartInfo.CreateNoWindow = true;
+                proc.EnableRaisingEvents = true;
+                proc.Start();
+            }
+            else
+            {
+                //Do not run mkSpiffs, use existing lookup.bin.
+            }
+        }
 
         private void portNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -639,23 +671,7 @@ namespace FMT_FW_Loader
             
         }
         
-        private static void Delay(double sec)
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            while (sw.Elapsed.TotalSeconds < sec)
-            {
-                // Delay.
-            }
-            sw.Stop();
-        }
-
-
-
-
-
-
-
+        
         private void MainForm_Load(object sender, EventArgs e)
         {
 
@@ -674,7 +690,6 @@ namespace FMT_FW_Loader
         private void btnWebRefresh_Click(object sender, EventArgs e)
         {
             WebClient client = new WebClient();
-            //Stream webdata = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/");
 
             MemoryStream memoryStream = new MemoryStream();
             using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
@@ -703,7 +718,7 @@ namespace FMT_FW_Loader
             // it doesn't matter if there is a space after ','
             string argument = "/select, \"" + filePath + "\"";
 
-            System.Diagnostics.Process.Start("explorer.exe", argument);
+            Process.Start("explorer.exe", argument);
         }
 
         private void btnRestart_Click(object sender, EventArgs e)
@@ -720,11 +735,19 @@ namespace FMT_FW_Loader
         {
             whitelistCollect();
             makeListFile();
+            MkSpiffs();
+
+            whitelistConfirmed.Visible = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             makeListFile();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MkSpiffs();
         }
     }
 }
