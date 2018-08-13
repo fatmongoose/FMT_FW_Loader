@@ -46,11 +46,8 @@ namespace FMT_FW_Loader
 
             nameCollect();
 
-
-            MessageBox.Show(
-                "Before you begin, please select the correct client or property from the drop-down box labeled 'Whitelist'. When the right whitelist is selected, click 'Load Whitelist' and the program will be ready to load the correct firmware.",
-                "Property Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            groupBox2.BringToFront();
+            groupBox1.SendToBack();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -521,7 +518,6 @@ namespace FMT_FW_Loader
 
         private void whitelistCollect()
         {
-            whitelistConfirmed.Visible = false;
             string url = "";
             foreach (var item in parsedList.Children())
             {
@@ -723,7 +719,10 @@ namespace FMT_FW_Loader
 
         private void btnRestart_Click(object sender, EventArgs e)
         {
-            initializeForTest();
+            //initializeForTest();
+
+            groupBox2.BringToFront();
+            groupBox1.SendToBack();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -737,7 +736,9 @@ namespace FMT_FW_Loader
             makeListFile();
             MkSpiffs();
 
-            whitelistConfirmed.Visible = true;
+            groupBox2.SendToBack();
+            groupBox1.BringToFront();
+            this.ActiveControl = txtDeviceID;
         }
 
         private void button3_Click(object sender, EventArgs e)
