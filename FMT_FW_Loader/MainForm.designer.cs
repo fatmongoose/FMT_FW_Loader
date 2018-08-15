@@ -72,8 +72,8 @@
             this.regionNameBox = new System.Windows.Forms.ComboBox();
             this.whitelistLoadButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -83,7 +83,7 @@
             // baudRateLabel
             // 
             this.baudRateLabel.AutoSize = true;
-            this.baudRateLabel.Location = new System.Drawing.Point(24, 89);
+            this.baudRateLabel.Location = new System.Drawing.Point(24, 71);
             this.baudRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.baudRateLabel.Name = "baudRateLabel";
             this.baudRateLabel.Size = new System.Drawing.Size(75, 17);
@@ -93,7 +93,7 @@
             // portNameLabel
             // 
             this.portNameLabel.AutoSize = true;
-            this.portNameLabel.Location = new System.Drawing.Point(24, 65);
+            this.portNameLabel.Location = new System.Drawing.Point(24, 47);
             this.portNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.portNameLabel.Name = "portNameLabel";
             this.portNameLabel.Size = new System.Drawing.Size(75, 17);
@@ -104,7 +104,7 @@
             // 
             this.portNameComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serialSettingsBindingSource, "PortName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.portNameComboBox.FormattingEnabled = true;
-            this.portNameComboBox.Location = new System.Drawing.Point(104, 64);
+            this.portNameComboBox.Location = new System.Drawing.Point(104, 46);
             this.portNameComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.portNameComboBox.Name = "portNameComboBox";
             this.portNameComboBox.Size = new System.Drawing.Size(114, 24);
@@ -186,7 +186,7 @@
             // 
             // txtLoadComplete
             // 
-            this.txtLoadComplete.Location = new System.Drawing.Point(23, 176);
+            this.txtLoadComplete.Location = new System.Drawing.Point(23, 158);
             this.txtLoadComplete.Name = "txtLoadComplete";
             this.txtLoadComplete.Size = new System.Drawing.Size(193, 22);
             this.txtLoadComplete.TabIndex = 24;
@@ -196,7 +196,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(23, 175);
+            this.progressBar1.Location = new System.Drawing.Point(23, 158);
             this.progressBar1.Maximum = 1000;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(193, 23);
@@ -205,7 +205,7 @@
             // 
             // btnLoadFW
             // 
-            this.btnLoadFW.Location = new System.Drawing.Point(71, 122);
+            this.btnLoadFW.Location = new System.Drawing.Point(71, 104);
             this.btnLoadFW.Margin = new System.Windows.Forms.Padding(2);
             this.btnLoadFW.Name = "btnLoadFW";
             this.btnLoadFW.Size = new System.Drawing.Size(102, 39);
@@ -216,30 +216,34 @@
             // 
             // txtBaudRate
             // 
-            this.txtBaudRate.Location = new System.Drawing.Point(104, 89);
+            this.txtBaudRate.Location = new System.Drawing.Point(104, 71);
             this.txtBaudRate.Margin = new System.Windows.Forms.Padding(2);
             this.txtBaudRate.Name = "txtBaudRate";
+            this.txtBaudRate.ReadOnly = true;
             this.txtBaudRate.Size = new System.Drawing.Size(114, 22);
             this.txtBaudRate.TabIndex = 11;
             // 
             // txtDeviceID
             // 
-            this.txtDeviceID.Location = new System.Drawing.Point(104, 39);
+            this.txtDeviceID.Location = new System.Drawing.Point(104, 21);
             this.txtDeviceID.Margin = new System.Windows.Forms.Padding(2);
             this.txtDeviceID.MaxLength = 8;
             this.txtDeviceID.Name = "txtDeviceID";
+            this.txtDeviceID.ReadOnly = true;
             this.txtDeviceID.Size = new System.Drawing.Size(114, 22);
             this.txtDeviceID.TabIndex = 3;
+            this.txtDeviceID.Visible = false;
             // 
             // lblDeviceID
             // 
             this.lblDeviceID.AutoSize = true;
-            this.lblDeviceID.Location = new System.Drawing.Point(26, 41);
+            this.lblDeviceID.Location = new System.Drawing.Point(26, 23);
             this.lblDeviceID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDeviceID.Name = "lblDeviceID";
             this.lblDeviceID.Size = new System.Drawing.Size(68, 17);
             this.lblDeviceID.TabIndex = 3;
             this.lblDeviceID.Text = "Device ID\r\n";
+            this.lblDeviceID.Visible = false;
             // 
             // button1
             // 
@@ -542,14 +546,6 @@
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(13, 19);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(819, 228);
-            this.groupBox3.TabIndex = 31;
-            this.groupBox3.TabStop = false;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -558,6 +554,14 @@
             this.label2.Size = new System.Drawing.Size(301, 17);
             this.label2.TabIndex = 36;
             this.label2.Text = "Select your whitelist to begin flashing firmware.";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(13, 19);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(819, 228);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
             // 
             // MainForm
             // 

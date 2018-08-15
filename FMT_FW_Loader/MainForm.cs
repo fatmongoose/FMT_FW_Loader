@@ -29,8 +29,7 @@ namespace FMT_FW_Loader
             this.Text = ("FMT FW Loader " + Directory.GetCurrentDirectory().ToString());
             UserInitialization();
         }
-
-
+        
         private void UserInitialization()
         {
             _spManager = new SerialPortManager();
@@ -52,18 +51,15 @@ namespace FMT_FW_Loader
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
         }
-
-
+        
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _spManager.Dispose();
         }
 
-       
         // Handles the "Stop Listening"-buttom click event
         private void btnStop_Click(object sender, EventArgs e)
         {
-
             try
             {
             }
@@ -77,18 +73,24 @@ namespace FMT_FW_Loader
             try
             {
                 _spManager.refreshPorts();
+
                 txtDeviceID.CharacterCasing = CharacterCasing.Upper;
                 txtLoadComplete.Visible = false;
-                //check for Name and Test Station ID
-                if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
-                {
-                    //this where we need to not to do anything until the right fields are filled. 
-                    MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+
+                _spManager.StartListening();
+
+                //txtDeviceID.Text = getID();
+                //if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
+                //{
+                //    //this where we need to not to do anything until the right fields are filled. 
+                //    MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 progressBar1.Value = 45;
 
-                _testdata.DeviceID = txtDeviceID.Text;
+                //_testdata.DeviceID = txtDeviceID.Text;
+
+                _spManager.StopListening();
 
                 string target = "firmware\\esptool.exe";
                 string filename = Path.Combine(txtCWD.Text.ToString(), target);
@@ -126,17 +128,14 @@ namespace FMT_FW_Loader
                 {
                     Application.DoEvents(); // This keeps your form responsive by processing events
                 }
-
             }
             finally
             {
             }
-
             _spManager.CurrentSerialSettings.BaudRate = _testdata._baudRate;
             txtBaudRate.Text = _testdata._baudRate.ToString();
 
             _spManager.StartListening();
-            
         }
 
         private void Proc_Exited(object sender, EventArgs e)
@@ -309,9 +308,7 @@ namespace FMT_FW_Loader
                     {
                         progressBar1.Value = 945;
                     }
-
                 } 
-                
             }
             )
             );
@@ -320,30 +317,24 @@ namespace FMT_FW_Loader
         private void butSend_Click(object sender, EventArgs e)
         {
         }
-
-
-
+        
         private void buttonOneScan_Click(object sender, EventArgs e)
         {
-            txtLookup.Text = "B1351B75DDD3815A";
+            //txtLookup.Text = "B1351B75DDD3815A";
         }
-
-    
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             progressBar1.Value = 0;
             _spManager.refreshPorts();
         }
-
-
+        
         private void initializeForTest()
         {
             if (!File.Exists(cd + "\\firmware\\idData.txt"))
             {
                 File.Create(cd + "\\firmware\\idData.txt").Close();
             }
-
             //clear out any old test data
             _testdata = new TestDataRec();
             cd = Directory.GetCurrentDirectory();
@@ -402,7 +393,7 @@ namespace FMT_FW_Loader
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
             // set focus
-            this.ActiveControl = txtDeviceID;
+            this.ActiveControl = btnLoadFW;
         }
         
         private void postResults()
@@ -436,7 +427,6 @@ namespace FMT_FW_Loader
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             tbData.AppendText("responseString " + responseString.ToString() + "\r\n");
-
         }
 
         /********** Variables for whitelists **********/
@@ -447,6 +437,7 @@ namespace FMT_FW_Loader
         string[] nameArray;
         JArray parsedList;
         string whitelistText;
+        string devIDreturned;
 
         private void nameCollect()
         {
@@ -496,8 +487,7 @@ namespace FMT_FW_Loader
             //tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
 
             /********** Load properties' names to the combo box. **********/
-
-            //var listdata = (JObject)JsonConvert.DeserializeObject(responseFromList);
+            
             parsedList = JArray.Parse(responseFromList);
             List<string> nameList = new List<string>();
             nameList.Add("Marriott (Full Client List)");
@@ -613,26 +603,49 @@ namespace FMT_FW_Loader
             tbData.AppendText(str);
             tbData.ScrollToCaret();
 
-            /************************* Verify the boot **************************************/
-            // If one of these phrases comes through the serial port, then the boot is verified.
 
+            /************************************** Verify the boot **************************************/
+            // If one of these phrases comes through the serial port, then the boot is verified.
+            int versiontime = 0;
             int foundit = 0;
 
-            if (str.Contains("Reading alarm file"))
+            if (str.Contains("version"))
             {
                 foundit = 1;
+                //string devID = "002C1D57";
+                //var jsonVersion = JArray.Parse(str);
+                //foreach (var item in jsonVersion.Children())
+                //{
+                //    devID = jsonVersion["deviceid"].Value<string>();
+                //    tbData.AppendText(devID + "\r\n\r\n");
+                //}
+                //txtDeviceID.Text = devID;
+
+                Regex rx = new Regex("deviceid");
+                foreach (Match match in rx.Matches(str))
+                {
+                    int i = match.Index;
+                    devIDreturned = str.Substring(i + 12, 8);
+                    //tbData.AppendText(devIDreturned + "\r\n");
+                    txtDeviceID.Text = devIDreturned;
+                }
             }
+            //if (str.Contains("Reading alarm file"))
+            //{
+            //    versiontime = 1;
+            //}
             if (str.Contains("FMT personalAlarm"))
             {
-                foundit = 1;
+                versiontime = 1;
             }
-            if (str.Contains("Going to sleep"))
-            {
-                foundit = 1;
-            }
+            //if (str.Contains("Going to sleep"))
+            //{
+            //    versiontime = 1;
+            //}
             if (foundit == 1)
             {
-                string temp = _testdata.content.ToString(); 
+                tbData.AppendText("Found it!");
+                string temp = _testdata.content.ToString();
                 Regex rx = new Regex(txtDeviceID.Text.ToString());
                 foreach (Match match in rx.Matches(temp))
                 {
@@ -640,7 +653,7 @@ namespace FMT_FW_Loader
                     // idData.AppendText("\r\n" + i.ToString());
                     idData.AppendText(temp.Substring(i, 25) + "\r\n");
                 }
-                
+
                 progressBar1.Value = 1000;
                 txtLoadComplete.Visible = true;
                 
@@ -648,6 +661,10 @@ namespace FMT_FW_Loader
                 _spManager.StopListening();
                 //clear any exisitng test data
                 initializeForTest();
+            }
+            if (versiontime == 1)
+            {
+                _spManager.SendString("VERSION");
             }
             
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
@@ -664,17 +681,13 @@ namespace FMT_FW_Loader
                 _testdata.DeviceID = str.Substring(str.Length - 9);
               //  txtDeviceID.Text = _testdata.DeviceID.ToString();
             }
-            
         }
-        
         
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
-
-
-
+        
         private void btnClearList_Click(object sender, EventArgs e)
         {
             File.WriteAllText(cd + "\\firmware\\idData.txt", String.Empty);
@@ -698,7 +711,7 @@ namespace FMT_FW_Loader
             _testdata.content = reader.ReadToEnd();
             reader.BaseStream.Position = 0;
             
-            this.ActiveControl = txtDeviceID;
+            this.ActiveControl = btnLoadFW;
         }
 
         private void btn_ShowFile_Click(object sender, EventArgs e)
