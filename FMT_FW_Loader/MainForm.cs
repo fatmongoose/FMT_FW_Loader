@@ -447,8 +447,6 @@ namespace FMT_FW_Loader
             loginReq.Method = "POST";
             loginReq.ContentType = "application/x-www-form-urlencoded";
             string user = "fmt";
-            // string pass = WebUtility.UrlEncode("hadsk*&^e2jHZgda32"); // UrlEncode method not working?
-            // hadsk%2A%26%5Ee2jHZgda32 // url-encoded password
             string pass = "hadsk%2A%26%5Ee2jHZgda32";
             string token = "26a05b8635ee9f74cc86e59cc658f424";
 
@@ -458,22 +456,18 @@ namespace FMT_FW_Loader
                 // hard-coded at the moment for proof of concept, can add converter
             }
             HttpWebResponse response = (HttpWebResponse)loginReq.GetResponse();
-            //tbData.AppendText("\r\nLogin return:\r\n");
 
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 fullRead = reader.ReadToEnd();
-                //tbData.AppendText(fullRead + "\r\n");
             }
 
             /********** Separate the JSessionID. **********/
 
             var data = (JObject)JsonConvert.DeserializeObject(fullRead);
             JSessionID = data["JSESSIONID"].Value<string>();
-            //tbData.AppendText("\r\nJSessionID:\r\n");
 
             propListPage = "http://dora.umajin.com/api/1.0/list-properties.php?JSESSIONID=" + JSessionID;
-            //tbData.AppendText(propListPage + "\r\n"); // Seems to work!
 
             /********** Find properties list. **********/
 
@@ -482,10 +476,7 @@ namespace FMT_FW_Loader
             Stream datastream = listResponse.GetResponseStream();
             StreamReader readListResponse = new StreamReader(datastream);
             responseFromList = readListResponse.ReadToEnd();
-
-            //tbData.AppendText("\r\nFull Property List:\r\n");
-            //tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
-
+            
             /********** Load properties' names to the combo box. **********/
             
             parsedList = JArray.Parse(responseFromList);
@@ -494,14 +485,11 @@ namespace FMT_FW_Loader
             nameList.Add("Hilton (Full Client List)");
             nameList.Add("Marcus (Full Client List)");
             nameList.Add("Sage (Full Client List)");
-            //tbData.AppendText("\r\nParsed List:");
             foreach (var item in parsedList.Children())
             {
                 string name = item["property_name"].Value<string>();
                 nameList.Add(name);
-                //tbData.AppendText("\r\n" + name);
             }
-            //tbData.AppendText("\r\n");
             nameArray = nameList.ToArray();
             regionNameBox.DataSource = nameArray;
         }
@@ -526,15 +514,12 @@ namespace FMT_FW_Loader
                     url = baseUrl + clientid + "&JSESSIONID=" + JSessionID;
                 }
             }
-            //tbData.AppendText("\r\n" + url + "\r\n");
 
             var whitelistReq = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse whitelistResponse = (HttpWebResponse)whitelistReq.GetResponse();
             Stream whitelistData = whitelistResponse.GetResponseStream();
             StreamReader readWhitelist = new StreamReader(whitelistData);
             whitelistText = readWhitelist.ReadToEnd();
-            //tbData.AppendText("\r\n\r\n");
-            tbData.AppendText(whitelistText + "\r\n");
         }
 
         private void makeListFile()
@@ -612,14 +597,6 @@ namespace FMT_FW_Loader
             if (str.Contains("version"))
             {
                 foundit = 1;
-                //string devID = "002C1D57";
-                //var jsonVersion = JArray.Parse(str);
-                //foreach (var item in jsonVersion.Children())
-                //{
-                //    devID = jsonVersion["deviceid"].Value<string>();
-                //    tbData.AppendText(devID + "\r\n\r\n");
-                //}
-                //txtDeviceID.Text = devID;
 
                 Regex rx = new Regex("deviceid");
                 foreach (Match match in rx.Matches(str))
@@ -630,18 +607,10 @@ namespace FMT_FW_Loader
                     txtDeviceID.Text = devIDreturned;
                 }
             }
-            //if (str.Contains("Reading alarm file"))
-            //{
-            //    versiontime = 1;
-            //}
             if (str.Contains("FMT personalAlarm"))
             {
                 versiontime = 1;
             }
-            //if (str.Contains("Going to sleep"))
-            //{
-            //    versiontime = 1;
-            //}
             if (foundit == 1)
             {
                 tbData.AppendText("Found it!");
@@ -733,6 +702,7 @@ namespace FMT_FW_Loader
         private void btnRestart_Click(object sender, EventArgs e)
         {
             //initializeForTest();
+            nameCollect();
 
             groupBox2.BringToFront();
             groupBox1.SendToBack();
