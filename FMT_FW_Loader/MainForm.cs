@@ -22,6 +22,7 @@ namespace FMT_FW_Loader
         TestDataRec _testdata;
 
         static string cd = Directory.GetCurrentDirectory();
+        volatile bool basicFlag = true;
 
         public MainForm()
         {
@@ -43,10 +44,9 @@ namespace FMT_FW_Loader
 
             initializeForTest();
 
-            nameCollect();
-            firmwareOptions();
-
-            groupBox2.BringToFront();
+            groupBox5.BringToFront();
+            idDataBox.SendToBack();
+            groupBox2.SendToBack();
             groupBox1.SendToBack();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
@@ -363,37 +363,47 @@ namespace FMT_FW_Loader
             _testdata = new TestDataRec();
             cd = Directory.GetCurrentDirectory();
 
-            WebClient client = new WebClient();
-
-            MemoryStream memoryStream = new MemoryStream();
-            using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
             {
-                input.CopyTo(memoryStream);
+                string tempHeader = File.ReadAllLines(cd + "\\firmware\\image\\table.txt").First();
+                WLHeader.Text = tempHeader.TrimEnd(tempHeader[tempHeader.Length - 1]);
             }
-            memoryStream.Position = 0;
-
-            StreamReader reader = new StreamReader(memoryStream);
-            _testdata.content = reader.ReadToEnd();
-
-            reader.BaseStream.Position = 0;
-            // check to see if we need to do this....                 _testdata._testState = 0;
 
             tbData.Clear();
             idData.Clear();
-            
-            // Read each line of the file into a string array. Each element
-            // of the array is one line of the file.
-            string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
 
-            // Display the file contents by using a foreach loop.
-            foreach (string line in lines)
-            {
-                // Use a tab to indent each line of the file.
-                idData.AppendText(line + "\r\n");
-            }
+            //if (!basicFlag)
+            //{
+                WebClient client = new WebClient();
 
-            int lineCount = File.ReadAllLines(cd + "\\firmware\\idData.txt").Count();
-            LineCountBox.Text = lineCount.ToString();
+                MemoryStream memoryStream = new MemoryStream();
+                using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+                {
+                    input.CopyTo(memoryStream);
+                }
+                memoryStream.Position = 0;
+
+                StreamReader reader = new StreamReader(memoryStream);
+                _testdata.content = reader.ReadToEnd();
+
+                reader.BaseStream.Position = 0;
+                // check to see if we need to do this....                 _testdata._testState = 0;
+
+
+                // Read each line of the file into a string array. Each element
+                // of the array is one line of the file.
+                string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
+
+                // Display the file contents by using a foreach loop.
+                foreach (string line in lines)
+                {
+                    // Use a tab to indent each line of the file.
+                    idData.AppendText(line + "\r\n");
+                }
+
+                int lineCount = File.ReadAllLines(cd + "\\firmware\\idData.txt").Count();
+                LineCountBox.Text = lineCount.ToString();
+            //}
 
             txtBaudRate.Clear();
             txtDeviceID.Clear();
@@ -647,20 +657,21 @@ namespace FMT_FW_Loader
             }
             if (foundit == 1)
             {
-                tbData.AppendText("Found it!");
-                string temp = _testdata.content.ToString();
-                Regex rx = new Regex(txtDeviceID.Text.ToString());
-                foreach (Match match in rx.Matches(temp))
+                if (!basicFlag)
                 {
-                    int i = match.Index;
-                    // idData.AppendText("\r\n" + i.ToString());
-                    idData.AppendText(temp.Substring(i, 25) + "\r\n");
+                    string temp = _testdata.content.ToString();
+                    Regex rx = new Regex(txtDeviceID.Text.ToString());
+                    foreach (Match match in rx.Matches(temp))
+                    {
+                        int i = match.Index;
+                        // idData.AppendText("\r\n" + i.ToString());
+                        idData.AppendText(temp.Substring(i, 25) + "\r\n");
+                    }
+                File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 }
-
                 progressBar1.Value = 1000;
                 txtLoadComplete.Visible = true;
                 
-                File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 _spManager.StopListening();
                 //clear any exisitng test data
                 initializeForTest();
@@ -738,7 +749,9 @@ namespace FMT_FW_Loader
             //initializeForTest();
             nameCollect();
 
-            groupBox2.BringToFront();
+            groupBox5.BringToFront();
+            groupBox2.SendToBack();
+            idDataBox.SendToBack();
             groupBox1.SendToBack();
         }
 
@@ -755,6 +768,24 @@ namespace FMT_FW_Loader
 
             groupBox2.SendToBack();
             groupBox1.BringToFront();
+            if (!basicFlag)
+            {
+                idDataBox.BringToFront();
+            }
+            else
+            {
+                idDataBox.Visible = false;
+                groupBox2.Visible = false;
+                groupBox5.Visible = false;
+                groupBox3.Visible = false;
+            }
+
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
+            {
+                string tempHeader = File.ReadAllLines(cd + "\\firmware\\image\\table.txt").First();
+                WLHeader.Text = tempHeader.TrimEnd(tempHeader[tempHeader.Length - 1]);
+            }
+
             this.ActiveControl = txtDeviceID;
         }
 
@@ -766,6 +797,26 @@ namespace FMT_FW_Loader
         private void button4_Click(object sender, EventArgs e)
         {
             MkSpiffs();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            nameCollect();
+            firmwareOptions();
+
+            groupBox5.SendToBack();
+            groupBox2.BringToFront();
+            basicFlag = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            nameCollect();
+            firmwareOptions();
+
+            groupBox5.SendToBack();
+            groupBox2.BringToFront();
+            basicFlag = false;
         }
     }
 }

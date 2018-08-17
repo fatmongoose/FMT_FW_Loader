@@ -72,13 +72,22 @@
             this.regionNameBox = new System.Windows.Forms.ComboBox();
             this.whitelistLoadButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.versionBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.versionBox = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.idDataBox = new System.Windows.Forms.GroupBox();
+            this.lblHeader = new System.Windows.Forms.Label();
+            this.WLHeader = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.idDataBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // baudRateLabel
@@ -114,11 +123,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.LineCountBox);
-            this.groupBox1.Controls.Add(this.btnRestart);
-            this.groupBox1.Controls.Add(this.btn_ShowFile);
-            this.groupBox1.Controls.Add(this.idData);
+            this.groupBox1.Controls.Add(this.WLHeader);
+            this.groupBox1.Controls.Add(this.lblHeader);
             this.groupBox1.Controls.Add(this.txtLoadComplete);
             this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Controls.Add(this.btnLoadFW);
@@ -132,7 +138,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(819, 228);
+            this.groupBox1.Size = new System.Drawing.Size(242, 228);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "V1.1";
@@ -140,7 +146,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(440, 180);
+            this.label1.Location = new System.Drawing.Point(206, 183);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(122, 17);
             this.label1.TabIndex = 30;
@@ -149,7 +155,7 @@
             // LineCountBox
             // 
             this.LineCountBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LineCountBox.Location = new System.Drawing.Point(567, 180);
+            this.LineCountBox.Location = new System.Drawing.Point(333, 183);
             this.LineCountBox.Name = "LineCountBox";
             this.LineCountBox.ReadOnly = true;
             this.LineCountBox.Size = new System.Drawing.Size(28, 15);
@@ -157,7 +163,7 @@
             // 
             // btnRestart
             // 
-            this.btnRestart.Location = new System.Drawing.Point(605, 168);
+            this.btnRestart.Location = new System.Drawing.Point(371, 171);
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(184, 39);
             this.btnRestart.TabIndex = 28;
@@ -167,7 +173,7 @@
             // 
             // btn_ShowFile
             // 
-            this.btn_ShowFile.Location = new System.Drawing.Point(241, 168);
+            this.btn_ShowFile.Location = new System.Drawing.Point(7, 171);
             this.btn_ShowFile.Name = "btn_ShowFile";
             this.btn_ShowFile.Size = new System.Drawing.Size(184, 39);
             this.btn_ShowFile.TabIndex = 27;
@@ -177,7 +183,7 @@
             // 
             // idData
             // 
-            this.idData.Location = new System.Drawing.Point(241, 17);
+            this.idData.Location = new System.Drawing.Point(7, 20);
             this.idData.Margin = new System.Windows.Forms.Padding(4);
             this.idData.Multiline = true;
             this.idData.Name = "idData";
@@ -483,7 +489,7 @@
             this.groupBox4.Controls.Add(this.txtName);
             this.groupBox4.Controls.Add(this.txtBootloader);
             this.groupBox4.Controls.Add(this.btnLookup);
-            this.groupBox4.Location = new System.Drawing.Point(31, 264);
+            this.groupBox4.Location = new System.Drawing.Point(31, 409);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -491,6 +497,7 @@
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
+            this.groupBox4.Visible = false;
             // 
             // button4
             // 
@@ -531,7 +538,7 @@
             this.whitelistLoadButton.Name = "whitelistLoadButton";
             this.whitelistLoadButton.Size = new System.Drawing.Size(129, 24);
             this.whitelistLoadButton.TabIndex = 33;
-            this.whitelistLoadButton.Text = "Load Whitelist";
+            this.whitelistLoadButton.Text = "Continue";
             this.whitelistLoadButton.UseVisualStyleBackColor = true;
             this.whitelistLoadButton.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -546,6 +553,15 @@
             this.groupBox2.Size = new System.Drawing.Size(577, 100);
             this.groupBox2.TabIndex = 36;
             this.groupBox2.TabStop = false;
+            // 
+            // versionBox
+            // 
+            this.versionBox.FormattingEnabled = true;
+            this.versionBox.Location = new System.Drawing.Point(179, 35);
+            this.versionBox.MaxDropDownItems = 4;
+            this.versionBox.Name = "versionBox";
+            this.versionBox.Size = new System.Drawing.Size(205, 24);
+            this.versionBox.TabIndex = 37;
             // 
             // label2
             // 
@@ -564,14 +580,76 @@
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             // 
-            // versionBox
+            // groupBox5
             // 
-            this.versionBox.FormattingEnabled = true;
-            this.versionBox.Location = new System.Drawing.Point(179, 35);
-            this.versionBox.MaxDropDownItems = 4;
-            this.versionBox.Name = "versionBox";
-            this.versionBox.Size = new System.Drawing.Size(205, 24);
-            this.versionBox.TabIndex = 37;
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Controls.Add(this.button5);
+            this.groupBox5.Controls.Add(this.button2);
+            this.groupBox5.Location = new System.Drawing.Point(136, 72);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(577, 100);
+            this.groupBox5.TabIndex = 37;
+            this.groupBox5.TabStop = false;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(126, 42);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(134, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "Basic Mode";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(319, 42);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(134, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Advanced Mode";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(141, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(288, 17);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "Select your loader version before beginning.";
+            // 
+            // idDataBox
+            // 
+            this.idDataBox.Controls.Add(this.label1);
+            this.idDataBox.Controls.Add(this.idData);
+            this.idDataBox.Controls.Add(this.LineCountBox);
+            this.idDataBox.Controls.Add(this.btn_ShowFile);
+            this.idDataBox.Controls.Add(this.btnRestart);
+            this.idDataBox.Location = new System.Drawing.Point(254, 19);
+            this.idDataBox.Name = "idDataBox";
+            this.idDataBox.Size = new System.Drawing.Size(578, 228);
+            this.idDataBox.TabIndex = 38;
+            this.idDataBox.TabStop = false;
+            // 
+            // lblHeader
+            // 
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.Location = new System.Drawing.Point(21, 193);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(65, 17);
+            this.lblHeader.TabIndex = 25;
+            this.lblHeader.Text = "Whitelist:";
+            // 
+            // WLHeader
+            // 
+            this.WLHeader.Location = new System.Drawing.Point(92, 190);
+            this.WLHeader.Name = "WLHeader";
+            this.WLHeader.ReadOnly = true;
+            this.WLHeader.Size = new System.Drawing.Size(124, 22);
+            this.WLHeader.TabIndex = 39;
+            this.WLHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MainForm
             // 
@@ -583,9 +661,11 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CancelButton = this.btnLookup;
             this.ClientSize = new System.Drawing.Size(1523, 1053);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.idDataBox);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
@@ -601,6 +681,10 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.idDataBox.ResumeLayout(false);
+            this.idDataBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -653,6 +737,13 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox versionBox;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox idDataBox;
+        private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.TextBox WLHeader;
     }
 }
 

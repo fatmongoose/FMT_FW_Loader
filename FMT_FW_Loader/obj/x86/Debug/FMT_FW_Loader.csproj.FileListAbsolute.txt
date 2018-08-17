@@ -58,3 +58,15 @@ C:\UpgradesToFWLoader\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader
 C:\UpgradesToFWLoader\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CopyComplete
 C:\UpgradesToFWLoader\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
 C:\UpgradesToFWLoader\WhitelistFlasher\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.exe
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\bin\Debug\FMT_FW_Loader.pdb
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\bin\Debug\Newtonsoft.Json.dll
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\bin\Debug\Newtonsoft.Json.xml
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csprojAssemblyReference.cache
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.MainForm.resources
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.Properties.Resources.resources
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.GenerateResource.cache
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CoreCompileInputs.cache
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.csproj.CopyComplete
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.exe
+C:\UpgradesToFWLoader\WhitelistFlasherCopy\FMT_FW_Loader\obj\x86\Debug\FMT_FW_Loader.pdb
