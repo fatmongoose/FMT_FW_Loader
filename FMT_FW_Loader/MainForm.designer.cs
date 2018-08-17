@@ -74,6 +74,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.versionBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -482,7 +483,7 @@
             this.groupBox4.Controls.Add(this.txtName);
             this.groupBox4.Controls.Add(this.txtBootloader);
             this.groupBox4.Controls.Add(this.btnLookup);
-            this.groupBox4.Location = new System.Drawing.Point(31, 364);
+            this.groupBox4.Location = new System.Drawing.Point(31, 264);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -490,7 +491,6 @@
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Progress Monitor";
-            this.groupBox4.Visible = false;
             // 
             // button4
             // 
@@ -519,7 +519,7 @@
             this.regionNameBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.regionNameBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.regionNameBox.FormattingEnabled = true;
-            this.regionNameBox.Location = new System.Drawing.Point(13, 38);
+            this.regionNameBox.Location = new System.Drawing.Point(13, 64);
             this.regionNameBox.MaxDropDownItems = 50;
             this.regionNameBox.Name = "regionNameBox";
             this.regionNameBox.Size = new System.Drawing.Size(407, 24);
@@ -527,7 +527,7 @@
             // 
             // whitelistLoadButton
             // 
-            this.whitelistLoadButton.Location = new System.Drawing.Point(432, 38);
+            this.whitelistLoadButton.Location = new System.Drawing.Point(432, 64);
             this.whitelistLoadButton.Name = "whitelistLoadButton";
             this.whitelistLoadButton.Size = new System.Drawing.Size(129, 24);
             this.whitelistLoadButton.TabIndex = 33;
@@ -537,6 +537,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.versionBox);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.regionNameBox);
             this.groupBox2.Controls.Add(this.whitelistLoadButton);
@@ -549,11 +550,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(141, 15);
+            this.label2.Location = new System.Drawing.Point(63, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(301, 17);
+            this.label2.Size = new System.Drawing.Size(436, 17);
             this.label2.TabIndex = 36;
-            this.label2.Text = "Select your whitelist to begin flashing firmware.";
+            this.label2.Text = "Select your firmware version and whitelist to begin flashing firmware.\r\n";
             // 
             // groupBox3
             // 
@@ -562,6 +563,15 @@
             this.groupBox3.Size = new System.Drawing.Size(819, 228);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
+            // 
+            // versionBox
+            // 
+            this.versionBox.FormattingEnabled = true;
+            this.versionBox.Location = new System.Drawing.Point(179, 35);
+            this.versionBox.MaxDropDownItems = 4;
+            this.versionBox.Name = "versionBox";
+            this.versionBox.Size = new System.Drawing.Size(205, 24);
+            this.versionBox.TabIndex = 37;
             // 
             // MainForm
             // 
@@ -642,6 +652,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox versionBox;
     }
 }
 

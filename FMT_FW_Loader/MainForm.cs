@@ -44,6 +44,7 @@ namespace FMT_FW_Loader
             initializeForTest();
 
             nameCollect();
+            firmwareOptions();
 
             groupBox2.BringToFront();
             groupBox1.SendToBack();
@@ -77,7 +78,7 @@ namespace FMT_FW_Loader
                 txtDeviceID.CharacterCasing = CharacterCasing.Upper;
                 txtLoadComplete.Visible = false;
 
-                _spManager.StartListening();
+                //_spManager.StartListening();
 
                 //txtDeviceID.Text = getID();
                 //if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
@@ -90,13 +91,36 @@ namespace FMT_FW_Loader
 
                 //_testdata.DeviceID = txtDeviceID.Text;
 
-                _spManager.StopListening();
+                //_spManager.StopListening();
 
-                string target = "firmware\\esptool.exe";
-                string filename = Path.Combine(txtCWD.Text.ToString(), target);
+                string target;
+                string filename;
+                string arguments;
+                string firmwarePath;
                 
+                target = "firmware\\esptool.exe";
+                filename = Path.Combine(txtCWD.Text.ToString(), target);
 
-                string arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
+                if (versionBox.SelectedIndex == 0)
+                {
+                    firmwarePath = "firmware\\firmware_SPKon_BLEoff.bin";
+                }
+                else if (versionBox.SelectedIndex == 1)
+                {
+                    firmwarePath = "firmware\\firmware_SPKon_BLEon.bin";
+                }
+                else if (versionBox.SelectedIndex == 2)
+                {
+                    firmwarePath = "firmware\\firmware_SPKoff_BLEoff.bin";
+                }
+                else
+                {
+                    firmwarePath = "firmware\\firmware_SPKoff_BLEon.bin";
+                }
+
+                txtFW.Text = Path.Combine(txtCWD.Text.ToString(), firmwarePath).ToString();
+                
+                arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
                     " --baud " + _testdata._prog_baudRate.ToString() +
                     " --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect" +
                     " 0x1F0000 " + txtLookup.Text.ToString() +
@@ -104,7 +128,7 @@ namespace FMT_FW_Loader
                     " 0x1000 " + txtBootloader.Text.ToString() +
                     " 0x10000 " + txtFW.Text.ToString() +
                     " 0x8000 " + txtPartitions.Text.ToString();
-                
+
                 Process proc = new Process();
                 proc.StartInfo.FileName = filename;
                 proc.StartInfo.Arguments = arguments;
@@ -382,13 +406,13 @@ namespace FMT_FW_Loader
             txtBootApp0.Clear();
             
             txtCWD.Text = Directory.GetCurrentDirectory();
-            
+
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
             txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
             txtFW.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\firmware.bin").ToString();
             txtPartitions.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\partitions.bin").ToString();
-            
+
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
@@ -427,6 +451,16 @@ namespace FMT_FW_Loader
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             tbData.AppendText("responseString " + responseString.ToString() + "\r\n");
+        }
+
+        private void firmwareOptions()
+        {
+            List<string> firmwares = new List<string>();
+            firmwares.Add("Speaker on, BLE off");
+            firmwares.Add("Speaker on, BLE on");
+            firmwares.Add("Speaker off, BLE off");
+            firmwares.Add("Speaker off, BLE on");
+            versionBox.DataSource = firmwares;
         }
 
         /********** Variables for whitelists **********/
