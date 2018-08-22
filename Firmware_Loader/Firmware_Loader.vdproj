@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_059BA02FD97547289FFF85407FA68BD7"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0AA07EEE585445F88F2577E1599DE3EA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -39,7 +33,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4441CD3436F44043BDE45AA3D9E402C0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7DD31726FF8045DF8DC90159A37848E9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_897D9883601B4CA0BFFC4B5F0999B47D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8C5A645F09A04875AF5B7A98B66D5AA1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92C0E657F3FB481EBF6BE624E5B5EC27"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -47,6 +65,12 @@
         {
         "MsmKey" = "8:_979CB989FE854799841C7FFCC7A3ABA5"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AEB627FC565C109B2953EE4A80057B2D"
+        "OwnerKey" = "8:_305A36771F114282A95E619EF830C863"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,12 +87,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
-        "OwnerKey" = "8:_305A36771F114282A95E619EF830C863"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_305A36771F114282A95E619EF830C863"
         "MsmSig" = "8:_UNDEFINED"
@@ -76,7 +94,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
+        "OwnerKey" = "8:_AEB627FC565C109B2953EE4A80057B2D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -174,26 +192,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_059BA02FD97547289FFF85407FA68BD7"
-            {
-            "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\firmware.bin"
-            "TargetName" = "8:firmware.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0AA07EEE585445F88F2577E1599DE3EA"
             {
             "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\desktop.ini"
@@ -234,10 +232,90 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4441CD3436F44043BDE45AA3D9E402C0"
+            {
+            "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\firmware_SPKon_BLEoff.bin"
+            "TargetName" = "8:firmware_SPKon_BLEoff.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DD31726FF8045DF8DC90159A37848E9"
+            {
+            "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\firmware_SPKon_BLEon.bin"
+            "TargetName" = "8:firmware_SPKon_BLEon.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_897D9883601B4CA0BFFC4B5F0999B47D"
+            {
+            "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\firmware_SPKoff_BLEon.bin"
+            "TargetName" = "8:firmware_SPKoff_BLEon.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8C5A645F09A04875AF5B7A98B66D5AA1"
             {
             "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\mkspiffs-0.2.3-arduino-esp32-win32.exe"
             "TargetName" = "8:mkspiffs-0.2.3-arduino-esp32-win32.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_92C0E657F3FB481EBF6BE624E5B5EC27"
+            {
+            "SourcePath" = "8:..\\FMT_FW_Loader\\bin\\Debug\\firmware\\firmware_SPKoff_BLEoff.bin"
+            "TargetName" = "8:firmware_SPKoff_BLEoff.bin"
             "Tag" = "8:"
             "Folder" = "8:_D7D245674BB84DA78BCA1155D60956FC"
             "Condition" = "8:"
@@ -272,6 +350,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AEB627FC565C109B2953EE4A80057B2D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AEB627FC565C109B2953EE4A80057B2D"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_8E32B12EA63C4E9BAB740E1F5D1D674F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BAF54FB585534F22BCE6932A85092AA5"
@@ -312,37 +421,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E3B0F6DBCD47C3A4FB8FD2CC0EC148AD"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Newtonsoft.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_8E32B12EA63C4E9BAB740E1F5D1D674F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }

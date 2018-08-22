@@ -22,6 +22,7 @@ namespace FMT_FW_Loader
         TestDataRec _testdata;
 
         static string cd = Directory.GetCurrentDirectory();
+        volatile bool basicFlag;
 
         public MainForm()
         {
@@ -29,8 +30,7 @@ namespace FMT_FW_Loader
             this.Text = ("FMT FW Loader " + Directory.GetCurrentDirectory().ToString());
             UserInitialization();
         }
-
-
+        
         private void UserInitialization()
         {
             _spManager = new SerialPortManager();
@@ -44,26 +44,23 @@ namespace FMT_FW_Loader
 
             initializeForTest();
 
-            nameCollect();
-
-            groupBox2.BringToFront();
+            groupBox5.BringToFront();
+            idDataBox.SendToBack();
+            groupBox2.SendToBack();
             groupBox1.SendToBack();
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
         }
-
-
+        
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _spManager.Dispose();
         }
 
-       
         // Handles the "Stop Listening"-buttom click event
         private void btnStop_Click(object sender, EventArgs e)
         {
-
             try
             {
             }
@@ -77,24 +74,53 @@ namespace FMT_FW_Loader
             try
             {
                 _spManager.refreshPorts();
+
                 txtDeviceID.CharacterCasing = CharacterCasing.Upper;
                 txtLoadComplete.Visible = false;
-                //check for Name and Test Station ID
-                if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
-                {
-                    //this where we need to not to do anything until the right fields are filled. 
-                    MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+
+                //_spManager.StartListening();
+
+                //txtDeviceID.Text = getID();
+                //if ((_spManager.CurrentSerialSettings.PortNameCollection == null) || String.IsNullOrEmpty(txtDeviceID.Text.ToString()) == true)
+                //{
+                //    //this where we need to not to do anything until the right fields are filled. 
+                //    MessageBox.Show("DeviceID or COM port is not valid", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 progressBar1.Value = 45;
 
-                _testdata.DeviceID = txtDeviceID.Text;
+                //_testdata.DeviceID = txtDeviceID.Text;
 
-                string target = "firmware\\esptool.exe";
-                string filename = Path.Combine(txtCWD.Text.ToString(), target);
+                //_spManager.StopListening();
+
+                string target;
+                string filename;
+                string arguments;
+                string firmwarePath;
                 
+                target = "firmware\\esptool.exe";
+                filename = Path.Combine(txtCWD.Text.ToString(), target);
 
-                string arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
+                if (versionBox.SelectedIndex == 0)
+                {
+                    firmwarePath = "firmware\\firmware_SPKon_BLEoff.bin";
+                }
+                else if (versionBox.SelectedIndex == 1)
+                {
+                    firmwarePath = "firmware\\firmware_SPKon_BLEon.bin";
+                }
+                else if (versionBox.SelectedIndex == 2)
+                {
+                    firmwarePath = "firmware\\firmware_SPKoff_BLEoff.bin";
+                }
+                else
+                {
+                    firmwarePath = "firmware\\firmware_SPKoff_BLEon.bin";
+                }
+
+                txtFW.Text = Path.Combine(txtCWD.Text.ToString(), firmwarePath).ToString();
+                
+                arguments = " --chip esp32 --port " + _spManager.CurrentSerialSettings.PortName.ToString() +
                     " --baud " + _testdata._prog_baudRate.ToString() +
                     " --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect" +
                     " 0x1F0000 " + txtLookup.Text.ToString() +
@@ -102,7 +128,7 @@ namespace FMT_FW_Loader
                     " 0x1000 " + txtBootloader.Text.ToString() +
                     " 0x10000 " + txtFW.Text.ToString() +
                     " 0x8000 " + txtPartitions.Text.ToString();
-                
+
                 Process proc = new Process();
                 proc.StartInfo.FileName = filename;
                 proc.StartInfo.Arguments = arguments;
@@ -126,17 +152,14 @@ namespace FMT_FW_Loader
                 {
                     Application.DoEvents(); // This keeps your form responsive by processing events
                 }
-
             }
             finally
             {
             }
-
             _spManager.CurrentSerialSettings.BaudRate = _testdata._baudRate;
             txtBaudRate.Text = _testdata._baudRate.ToString();
 
             _spManager.StartListening();
-            
         }
 
         private void Proc_Exited(object sender, EventArgs e)
@@ -309,9 +332,7 @@ namespace FMT_FW_Loader
                     {
                         progressBar1.Value = 945;
                     }
-
                 } 
-                
             }
             )
             );
@@ -320,65 +341,69 @@ namespace FMT_FW_Loader
         private void butSend_Click(object sender, EventArgs e)
         {
         }
-
-
-
+        
         private void buttonOneScan_Click(object sender, EventArgs e)
         {
-            txtLookup.Text = "B1351B75DDD3815A";
+            //txtLookup.Text = "B1351B75DDD3815A";
         }
-
-    
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             progressBar1.Value = 0;
             _spManager.refreshPorts();
         }
-
-
+        
         private void initializeForTest()
         {
             if (!File.Exists(cd + "\\firmware\\idData.txt"))
             {
                 File.Create(cd + "\\firmware\\idData.txt").Close();
             }
-
             //clear out any old test data
             _testdata = new TestDataRec();
             cd = Directory.GetCurrentDirectory();
 
-            WebClient client = new WebClient();
-
-            MemoryStream memoryStream = new MemoryStream();
-            using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
             {
-                input.CopyTo(memoryStream);
+                string tempHeader = File.ReadAllLines(cd + "\\firmware\\image\\table.txt").First();
+                WLHeader.Text = tempHeader.TrimEnd(tempHeader[tempHeader.Length - 1]);
             }
-            memoryStream.Position = 0;
-
-            StreamReader reader = new StreamReader(memoryStream);
-            _testdata.content = reader.ReadToEnd();
-
-            reader.BaseStream.Position = 0;
-            // check to see if we need to do this....                 _testdata._testState = 0;
 
             tbData.Clear();
             idData.Clear();
-            
-            // Read each line of the file into a string array. Each element
-            // of the array is one line of the file.
-            string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
 
-            // Display the file contents by using a foreach loop.
-            foreach (string line in lines)
-            {
-                // Use a tab to indent each line of the file.
-                idData.AppendText(line + "\r\n");
-            }
+            //if (!basicFlag)
+            //{
+                WebClient client = new WebClient();
 
-            int lineCount = File.ReadAllLines(cd + "\\firmware\\idData.txt").Count();
-            LineCountBox.Text = lineCount.ToString();
+                MemoryStream memoryStream = new MemoryStream();
+                using (Stream input = client.OpenRead("https://sf.fatmongoose.com/sf/pwc/"))
+                {
+                    input.CopyTo(memoryStream);
+                }
+                memoryStream.Position = 0;
+
+                StreamReader reader = new StreamReader(memoryStream);
+                _testdata.content = reader.ReadToEnd();
+
+                reader.BaseStream.Position = 0;
+                // check to see if we need to do this....                 _testdata._testState = 0;
+
+
+                // Read each line of the file into a string array. Each element
+                // of the array is one line of the file.
+                string[] lines = File.ReadAllLines(cd + "\\firmware\\idData.txt");
+
+                // Display the file contents by using a foreach loop.
+                foreach (string line in lines)
+                {
+                    // Use a tab to indent each line of the file.
+                    idData.AppendText(line + "\r\n");
+                }
+
+                int lineCount = File.ReadAllLines(cd + "\\firmware\\idData.txt").Count();
+                LineCountBox.Text = lineCount.ToString();
+            //}
 
             txtBaudRate.Clear();
             txtDeviceID.Clear();
@@ -391,18 +416,18 @@ namespace FMT_FW_Loader
             txtBootApp0.Clear();
             
             txtCWD.Text = Directory.GetCurrentDirectory();
-            
+
             txtLookup.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\lookup.bin").ToString();
             txtBootApp0.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\boot_app0.bin").ToString();
             txtBootloader.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\bootloader_qio_80m.bin").ToString();
             txtFW.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\firmware.bin").ToString();
             txtPartitions.Text = Path.Combine(txtCWD.Text.ToString(), "firmware\\partitions.bin").ToString();
-            
+
             _spManager.CurrentSerialSettings.BaudRate = _testdata._prog_baudRate;
             txtBaudRate.Text = _testdata._prog_baudRate.ToString();
 
             // set focus
-            this.ActiveControl = txtDeviceID;
+            this.ActiveControl = btnLoadFW;
         }
         
         private void postResults()
@@ -436,7 +461,16 @@ namespace FMT_FW_Loader
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             tbData.AppendText("responseString " + responseString.ToString() + "\r\n");
+        }
 
+        private void firmwareOptions()
+        {
+            List<string> firmwares = new List<string>();
+            firmwares.Add("Speaker on, BLE off");
+            firmwares.Add("Speaker on, BLE on");
+            firmwares.Add("Speaker off, BLE off");
+            firmwares.Add("Speaker off, BLE on");
+            versionBox.DataSource = firmwares;
         }
 
         /********** Variables for whitelists **********/
@@ -447,6 +481,7 @@ namespace FMT_FW_Loader
         string[] nameArray;
         JArray parsedList;
         string whitelistText;
+        string devIDreturned;
 
         private void nameCollect()
         {
@@ -456,8 +491,6 @@ namespace FMT_FW_Loader
             loginReq.Method = "POST";
             loginReq.ContentType = "application/x-www-form-urlencoded";
             string user = "fmt";
-            // string pass = WebUtility.UrlEncode("hadsk*&^e2jHZgda32"); // UrlEncode method not working?
-            // hadsk%2A%26%5Ee2jHZgda32 // url-encoded password
             string pass = "hadsk%2A%26%5Ee2jHZgda32";
             string token = "26a05b8635ee9f74cc86e59cc658f424";
 
@@ -467,22 +500,18 @@ namespace FMT_FW_Loader
                 // hard-coded at the moment for proof of concept, can add converter
             }
             HttpWebResponse response = (HttpWebResponse)loginReq.GetResponse();
-            //tbData.AppendText("\r\nLogin return:\r\n");
 
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 fullRead = reader.ReadToEnd();
-                //tbData.AppendText(fullRead + "\r\n");
             }
 
             /********** Separate the JSessionID. **********/
 
             var data = (JObject)JsonConvert.DeserializeObject(fullRead);
             JSessionID = data["JSESSIONID"].Value<string>();
-            //tbData.AppendText("\r\nJSessionID:\r\n");
 
             propListPage = "http://dora.umajin.com/api/1.0/list-properties.php?JSESSIONID=" + JSessionID;
-            //tbData.AppendText(propListPage + "\r\n"); // Seems to work!
 
             /********** Find properties list. **********/
 
@@ -491,27 +520,20 @@ namespace FMT_FW_Loader
             Stream datastream = listResponse.GetResponseStream();
             StreamReader readListResponse = new StreamReader(datastream);
             responseFromList = readListResponse.ReadToEnd();
-
-            //tbData.AppendText("\r\nFull Property List:\r\n");
-            //tbData.AppendText(responseFromList + "\r\n"); // Seems to work!
-
+            
             /********** Load properties' names to the combo box. **********/
-
-            //var listdata = (JObject)JsonConvert.DeserializeObject(responseFromList);
+            
             parsedList = JArray.Parse(responseFromList);
             List<string> nameList = new List<string>();
             nameList.Add("Marriott (Full Client List)");
             nameList.Add("Hilton (Full Client List)");
             nameList.Add("Marcus (Full Client List)");
             nameList.Add("Sage (Full Client List)");
-            //tbData.AppendText("\r\nParsed List:");
             foreach (var item in parsedList.Children())
             {
                 string name = item["property_name"].Value<string>();
                 nameList.Add(name);
-                //tbData.AppendText("\r\n" + name);
             }
-            //tbData.AppendText("\r\n");
             nameArray = nameList.ToArray();
             regionNameBox.DataSource = nameArray;
         }
@@ -536,15 +558,12 @@ namespace FMT_FW_Loader
                     url = baseUrl + clientid + "&JSESSIONID=" + JSessionID;
                 }
             }
-            //tbData.AppendText("\r\n" + url + "\r\n");
 
             var whitelistReq = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse whitelistResponse = (HttpWebResponse)whitelistReq.GetResponse();
             Stream whitelistData = whitelistResponse.GetResponseStream();
             StreamReader readWhitelist = new StreamReader(whitelistData);
             whitelistText = readWhitelist.ReadToEnd();
-            //tbData.AppendText("\r\n\r\n");
-            tbData.AppendText(whitelistText + "\r\n");
         }
 
         private void makeListFile()
@@ -613,41 +632,53 @@ namespace FMT_FW_Loader
             tbData.AppendText(str);
             tbData.ScrollToCaret();
 
-            /************************* Verify the boot **************************************/
-            // If one of these phrases comes through the serial port, then the boot is verified.
 
+            /************************************** Verify the boot **************************************/
+            // If one of these phrases comes through the serial port, then the boot is verified.
+            int versiontime = 0;
             int foundit = 0;
 
-            if (str.Contains("Reading alarm file"))
+            if (str.Contains("version"))
             {
                 foundit = 1;
+
+                Regex rx = new Regex("deviceid");
+                foreach (Match match in rx.Matches(str))
+                {
+                    int i = match.Index;
+                    devIDreturned = str.Substring(i + 12, 8);
+                    //tbData.AppendText(devIDreturned + "\r\n");
+                    txtDeviceID.Text = devIDreturned;
+                }
             }
             if (str.Contains("FMT personalAlarm"))
             {
-                foundit = 1;
-            }
-            if (str.Contains("Going to sleep"))
-            {
-                foundit = 1;
+                versiontime = 1;
             }
             if (foundit == 1)
             {
-                string temp = _testdata.content.ToString(); 
-                Regex rx = new Regex(txtDeviceID.Text.ToString());
-                foreach (Match match in rx.Matches(temp))
+                if (!basicFlag)
                 {
-                    int i = match.Index;
-                    // idData.AppendText("\r\n" + i.ToString());
-                    idData.AppendText(temp.Substring(i, 25) + "\r\n");
+                    string temp = _testdata.content.ToString();
+                    Regex rx = new Regex(txtDeviceID.Text.ToString());
+                    foreach (Match match in rx.Matches(temp))
+                    {
+                        int i = match.Index;
+                        // idData.AppendText("\r\n" + i.ToString());
+                        idData.AppendText(temp.Substring(i, 25) + "\r\n");
+                    }
+                    File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 }
-                
                 progressBar1.Value = 1000;
                 txtLoadComplete.Visible = true;
                 
-                File.WriteAllText(cd + "\\firmware\\idData.txt", idData.Text.ToString());
                 _spManager.StopListening();
                 //clear any exisitng test data
                 initializeForTest();
+            }
+            if (versiontime == 1)
+            {
+                _spManager.SendString("VERSION");
             }
             
             /********************** CODE SECTION TO GATHER ARBITRARY TEXT DATA FROM SERIAL STREAM ***************************************/
@@ -664,17 +695,13 @@ namespace FMT_FW_Loader
                 _testdata.DeviceID = str.Substring(str.Length - 9);
               //  txtDeviceID.Text = _testdata.DeviceID.ToString();
             }
-            
         }
-        
         
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
-
-
-
+        
         private void btnClearList_Click(object sender, EventArgs e)
         {
             File.WriteAllText(cd + "\\firmware\\idData.txt", String.Empty);
@@ -698,7 +725,7 @@ namespace FMT_FW_Loader
             _testdata.content = reader.ReadToEnd();
             reader.BaseStream.Position = 0;
             
-            this.ActiveControl = txtDeviceID;
+            this.ActiveControl = btnLoadFW;
         }
 
         private void btn_ShowFile_Click(object sender, EventArgs e)
@@ -719,7 +746,13 @@ namespace FMT_FW_Loader
 
         private void btnRestart_Click(object sender, EventArgs e)
         {
-            initializeForTest();
+            //initializeForTest();
+            nameCollect();
+
+            groupBox5.BringToFront();
+            groupBox2.SendToBack();
+            idDataBox.SendToBack();
+            groupBox1.SendToBack();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -735,6 +768,24 @@ namespace FMT_FW_Loader
 
             groupBox2.SendToBack();
             groupBox1.BringToFront();
+            if (!basicFlag)
+            {
+                idDataBox.BringToFront();
+            }
+            else
+            {
+                idDataBox.Visible = false;
+                groupBox2.Visible = false;
+                groupBox5.Visible = false;
+                groupBox3.Visible = false;
+            }
+
+            if (File.Exists(cd + "\\firmware\\image\\table.txt"))
+            {
+                string tempHeader = File.ReadAllLines(cd + "\\firmware\\image\\table.txt").First();
+                WLHeader.Text = tempHeader.TrimEnd(tempHeader[tempHeader.Length - 1]);
+            }
+
             this.ActiveControl = txtDeviceID;
         }
 
@@ -746,6 +797,26 @@ namespace FMT_FW_Loader
         private void button4_Click(object sender, EventArgs e)
         {
             MkSpiffs();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            nameCollect();
+            firmwareOptions();
+
+            groupBox5.SendToBack();
+            groupBox2.BringToFront();
+            basicFlag = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            nameCollect();
+            firmwareOptions();
+
+            groupBox5.SendToBack();
+            groupBox2.BringToFront();
+            basicFlag = false;
         }
     }
 }
